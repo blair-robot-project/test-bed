@@ -53,6 +53,7 @@ logger:
                         - '@id': talon6
                           port: 6
                           inverted: true
+            startingOverrideAutoshift: true
             ahrs:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
                     '@id': navX
@@ -80,11 +81,17 @@ logger:
               port: 0
               oversampleBits: 0
               averageBits: 0
+        - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+            '@id': poseEstimator
+            subsystem:
+                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                    drive
+            absolutePosAngleTolerance: 5
 defaultCommands: !!map
     drive :
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
             '@id': defaultDriveCommand
-            kP: 0.001
+            kP: 0.0
             kI: 0.0
             kD: 0.0
             absoluteTolerance: 0
@@ -160,12 +167,32 @@ defaultCommands: !!map
                     '@id': downshiftBufferTimer
                     bufferTimeSeconds: 0.0
                 upshiftFwdThresh: 0.3
+startupCommand:
+    org.usfirst.frc.team449.robot.commands.general.RunRunnables:
+        '@id': runRunnables
+        runnables:
+            - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                poseEstimator
 teleopStartupCommand:
     org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.commands.StartCompressor:
         '@id': startCompressor
         subsystem:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
+autoCommand:
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
+        '@id': autoCommand
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                drive
+        voltsPerSecond: 0.25
+#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+#        '@id': testAccel
+#        subsystem:
+#            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+#                drive
+#        velocity: 1
+#        seconds: 3
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
