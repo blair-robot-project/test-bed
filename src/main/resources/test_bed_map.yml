@@ -1,0 +1,176 @@
+---
+logger:
+    '@id': logger
+    loopTimeSecs: 0.025
+    eventLogFilename: "/home/lvuser/logs/eventLog-"
+    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+    subsystems:
+        - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+            '@id': drive
+            leftMaster:
+                org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                    &leftMaster
+                    '@id': leftMaster
+                    port: 1
+                    invertInVoltage: false
+                    reverseOutput: false
+                    reverseSensor: false
+                    enableBrakeMode: false
+                    postEncoderGearing: 0.333333333
+                    feetPerRotation: 1
+                    currentLimit: 50
+                    maxClosedLoopVoltage: 12
+                    feedbackDevice: QuadEncoder
+                    encoderCPR: 256
+                    startingGear: LOW
+                    perGearSettings:
+                        - gear: LOW
+                        - gear: HIGH
+                    minNumPointsInBottomBuffer: 10
+                    updaterProcessPeriodSecs: 0.005
+                    slaves:
+                        - '@id': talon2
+                          port: 2
+                          inverted: true
+                        - '@id': talon3
+                          port: 3
+                          inverted: true
+            rightMaster:
+                org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                    <<: *leftMaster
+                    '@id': rightMaster
+                    port: 4
+                    invertInVoltage: false
+                    reverseOutput: false
+                    reverseSensor: false
+                    perGearSettings:
+                        - gear: LOW
+                        - gear: HIGH
+                    slaves:
+                        - '@id': talon5
+                          port: 5
+                          inverted: true
+                        - '@id': talon6
+                          port: 6
+                          inverted: true
+            ahrs:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+                    '@id': navX
+                    port: kMXP
+                    invertYaw: true
+            shiftComponent:
+                org.usfirst.frc.team449.robot.components.ShiftComponent:
+                    '@id': driveShiftComponent
+                    otherShiftables:
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                            leftMaster
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                            rightMaster
+                    piston:
+                        '@id': driveShifter
+                        forward: 0
+                        reverse: 1
+                    lowGearPistonPos: kForward
+                    startingGear: LOW
+        - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
+            '@id': pneumatics
+            nodeID: 0
+            pressureSensor:
+              '@id': pressureSensor
+              port: 0
+              oversampleBits: 0
+              averageBits: 0
+defaultCommands: !!map
+    drive :
+        org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
+            '@id': defaultDriveCommand
+            kP: 0.001
+            kI: 0.0
+            kD: 0.0
+            absoluteTolerance: 0
+            toleranceBuffer: 25
+            deadband: 2
+            maxAngularVelToEnterLoop: 0.05
+            inverted: false
+            highGearAngularCoefficient: 2
+            driveStraightLoopEntryTimer:
+                '@id': driveStraightLoopEntryTimer
+                bufferTimeSeconds: 0.15
+            subsystem:
+                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                    drive
+            oi:
+                org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                    '@id': oi
+                    gamepad:
+                        org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                            '@id': driverGamepad
+                            port: 1
+                    rotThrottle:
+                        org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                            &rotThrottle
+                            '@id': rotThrottle
+                            stick: driverGamepad
+                            axis: 0
+                            smoothingTimeSecs: 0.04
+                            deadband: 0.05
+                            inverted: false
+                            polynomial:
+                                '@id': rotPoly
+                                powerToCoefficientMap: !!map
+                                    2 : 1
+                    fwdThrottle:
+                        org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
+                            '@id': fwdThrottle
+                            throttles:
+                                - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                                    <<: *rotThrottle
+                                    '@id': fwdTrigger
+                                    axis: 3
+                                    inverted: false
+                                    polynomial:
+                                        '@id': fwdPoly
+                                        powerToCoefficientMap: !!map
+                                            2 : 1
+                                - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                                    <<: *rotThrottle
+                                    '@id': revTrigger
+                                    axis: 2
+                                    inverted: true
+                                    polynomial:
+                                        '@id': revPoly
+                                        powerToCoefficientMap: !!map
+                                            2 : 1
+                    invertDPad: false
+                    dPadShift: 0.1
+                    turnInPlaceRotScale: 0.5
+                    scaleRotByFwdPoly:
+                        '@id': scaleRotByFwdPoly
+                        powerToCoefficientMap: !!map
+                            0.5: 0.6
+                            0: 0.2
+            autoshiftComponent:
+                '@id': autoshiftComponent
+                upshiftSpeed: 4
+                downshiftSpeed: 2
+                upshiftBufferTimer:
+                    '@id': upshiftBufferTimer
+                    bufferTimeSeconds: 0.25
+                downshiftBufferTimer:
+                    '@id': downshiftBufferTimer
+                    bufferTimeSeconds: 0.0
+                upshiftFwdThresh: 0.3
+teleopStartupCommand:
+    org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.commands.StartCompressor:
+        '@id': startCompressor
+        subsystem:
+            org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
+                pneumatics
+updater:
+    org.usfirst.frc.team449.robot.other.Updater:
+        '@id': updater
+        updatables:
+            - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                drive
+            - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                oi
