@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.wpi.first.wpilibj.command.Command;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.usfirst.frc.team449.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team449.robot.jacksonWrappers.MappedRunnable;
 import org.usfirst.frc.team449.robot.jacksonWrappers.YamlCommand;
 import org.usfirst.frc.team449.robot.jacksonWrappers.YamlSubsystem;
@@ -39,14 +38,11 @@ public class TestBedMap {
     @NotNull
     private final Runnable updater;
 
-    @Nullable
-    private final Map<YamlSubsystem, YamlCommand> defaultCommands;
-
     /**
-     * The command to run during autonomous. Can be null, and if it is, no command is run during autonomous.
+     * A map of subsystems to commands that sets the default command for each subsystem to its corresponding command.
      */
     @Nullable
-    private final Command autoCommand;
+    private final Map<YamlSubsystem, YamlCommand> defaultCommands;
 
     /**
      * The command to be run when first enabled in autonomous mode.
@@ -72,8 +68,8 @@ public class TestBedMap {
      * @param buttons              The buttons for controlling this robot. Can be null for an empty list.
      * @param logger               The logger for recording events and telemetry data.
      * @param updater              A runnable that updates cached variables.
-     * @param autoCommand          The command to run during autonomous. Can be null, and if it is, no command is run
-     *                             during autonomous.
+     * @param defaultCommands      A map of subsystems to commands that sets the default command for each subsystem to
+     *                             its corresponding command.
      * @param autoStartupCommand   The command to be run when first enabled in autonomous mode.
      * @param teleopStartupCommand The command to be run when first enabled in teleoperated mode.
      * @param startupCommand       The command to be run when first enabled.
@@ -83,7 +79,6 @@ public class TestBedMap {
                       @NotNull @JsonProperty(required = true) Logger logger,
                       @NotNull @JsonProperty(required = true) MappedRunnable updater,
                       @Nullable Map<YamlSubsystem, YamlCommand> defaultCommands,
-                      @Nullable YamlCommand autoCommand,
                       @Nullable YamlCommand autoStartupCommand,
                       @Nullable YamlCommand teleopStartupCommand,
                       @Nullable YamlCommand startupCommand) {
@@ -91,7 +86,6 @@ public class TestBedMap {
         this.logger = logger;
         this.updater = updater;
         this.defaultCommands = defaultCommands;
-        this.autoCommand = autoCommand != null ? autoCommand.getCommand() : null;
         this.autoStartupCommand = autoStartupCommand != null ? autoStartupCommand.getCommand() : null;
         this.teleopStartupCommand = teleopStartupCommand != null ? teleopStartupCommand.getCommand() : null;
         this.startupCommand = startupCommand != null ? startupCommand.getCommand() : null;
@@ -111,14 +105,6 @@ public class TestBedMap {
     @NotNull
     public Logger getLogger() {
         return logger;
-    }
-
-    /**
-     * @return The command to run during autonomous. Can be null.
-     */
-    @Nullable
-    public Command getAutoCommand() {
-        return autoCommand;
     }
 
     /**
@@ -153,6 +139,10 @@ public class TestBedMap {
         return updater;
     }
 
+    /**
+     * @return A map of subsystems to commands that sets the default command for each subsystem to its corresponding
+     * command.
+     */
     @Nullable
     public Map<YamlSubsystem, YamlCommand> getDefaultCommands() {
         return defaultCommands;

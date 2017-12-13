@@ -179,7 +179,7 @@ teleopStartupCommand:
         subsystem:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
-autoCommand:
+autoStartupCommand:
     org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
         '@id': autoCommand
         subsystem:

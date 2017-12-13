@@ -7,10 +7,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.usfirst.frc.team449.robot.jacksonWrappers.YamlSubsystem;
 import org.usfirst.frc.team449.robot.other.Clock;
 import org.yaml.snakeyaml.Yaml;
@@ -40,12 +38,6 @@ public class Robot extends IterativeRobot {
      * The Notifier running the logging thread.
      */
     private Notifier loggerNotifier;
-
-    /**
-     * The command to run during autonomous. Null to do nothing during autonomous.
-     */
-    @Nullable
-    private Command autonomousCommand;
 
     /**
      * Whether or not the robot has been enabled yet.
@@ -84,7 +76,7 @@ public class Robot extends IterativeRobot {
 
         //Set up default commands
         if (this.robotMap.getDefaultCommands() != null) {
-            for (YamlSubsystem subsystem : this.robotMap.getDefaultCommands().keySet()){
+            for (YamlSubsystem subsystem : this.robotMap.getDefaultCommands().keySet()) {
                 subsystem.setDefaultCommandManual(this.robotMap.getDefaultCommands().get(subsystem).getCommand());
             }
         }
@@ -94,8 +86,6 @@ public class Robot extends IterativeRobot {
 
         //Set fields from the map.
         this.loggerNotifier = new Notifier(robotMap.getLogger());
-
-        autonomousCommand = robotMap.getAutoCommand();
 
         //Run the logger to write all the events that happened during initialization to a file.
         robotMap.getLogger().run();
@@ -170,11 +160,6 @@ public class Robot extends IterativeRobot {
         //Run the auto startup command
         if (robotMap.getAutoStartupCommand() != null) {
             robotMap.getAutoStartupCommand().start();
-        }
-
-        //Start running the autonomous command
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
         }
 
         //Log
