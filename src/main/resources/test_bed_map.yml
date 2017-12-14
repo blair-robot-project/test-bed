@@ -55,10 +55,9 @@ logger:
                           inverted: true
             startingOverrideAutoshift: true
             ahrs:
-                org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
-                    '@id': navX
-                    port: kMXP
-                    invertYaw: true
+                '@id': navX
+                port: kMXP
+                invertYaw: true
             shiftComponent:
                 org.usfirst.frc.team449.robot.components.ShiftComponent:
                     '@id': driveShiftComponent
@@ -163,12 +162,9 @@ defaultCommands:
                 '@id': autoshiftComponent
                 upshiftSpeed: 4
                 downshiftSpeed: 2
-                upshiftBufferTimer:
-                    '@id': upshiftBufferTimer
-                    bufferTimeSeconds: 0.25
-                downshiftBufferTimer:
-                    '@id': downshiftBufferTimer
-                    bufferTimeSeconds: 0.0
+                upshiftDebouncer:
+                    '@id': upshiftDebouncer
+                    bufferTimeSeconds: 0.06
                 upshiftFwdThresh: 0.3
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.RunRunnables:
