@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.jetbrains.annotations.NotNull;
-import org.usfirst.frc.team449.robot.jacksonWrappers.YamlSubsystem;
 import org.usfirst.frc.team449.robot.other.Clock;
 import org.yaml.snakeyaml.Yaml;
 
@@ -72,13 +71,6 @@ public class Robot extends IterativeRobot {
             //This is either the map file not being in the file system OR it being improperly formatted.
             System.out.println("Config file is bad/nonexistent!");
             e.printStackTrace();
-        }
-
-        //Set up default commands
-        if (this.robotMap.getDefaultCommands() != null) {
-            for (YamlSubsystem subsystem : this.robotMap.getDefaultCommands().keySet()) {
-                subsystem.setDefaultCommandManual(this.robotMap.getDefaultCommands().get(subsystem).getCommand());
-            }
         }
 
         //Read sensors

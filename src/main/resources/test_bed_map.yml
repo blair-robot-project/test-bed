@@ -87,8 +87,11 @@ logger:
                 org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
                     drive
             absolutePosAngleTolerance: 5
-defaultCommands: !!map
-    drive :
+defaultCommands:
+    - subsystem:
+        org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+            drive
+      command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
             '@id': defaultDriveCommand
             kP: 0.0
