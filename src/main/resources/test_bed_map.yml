@@ -19,7 +19,7 @@ logger:
                     postEncoderGearing: 0.333333333
                     feetPerRotation: 1
                     currentLimit: 50
-                    maxClosedLoopVoltage: 12
+                    voltageCompVoltage: 12
                     feedbackDevice: QuadEncoder
                     encoderCPR: 256
                     startingGear: LOW
