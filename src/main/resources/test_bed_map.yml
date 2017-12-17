@@ -3,7 +3,8 @@ logger:
     '@id': logger
     loopTimeSecs: 0.025
     eventLogFilename: "/home/lvuser/logs/eventLog-"
-    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+#    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
             '@id': drive
@@ -12,10 +13,10 @@ logger:
                     &leftMaster
                     '@id': leftMaster
                     port: 1
-                    invertInVoltage: false
+                    invertInVoltage: true
                     reverseOutput: false
-                    reverseSensor: false
-                    enableBrakeMode: false
+                    reverseSensor: true
+                    enableBrakeMode: true
                     postEncoderGearing: 0.333333333
                     feetPerRotation: 1
                     currentLimit: 50
@@ -24,17 +25,19 @@ logger:
                     encoderCPR: 256
                     startingGear: LOW
                     perGearSettings:
-                        - gear: LOW
-                        - gear: HIGH
+                        - &lowGear
+                          gear: LOW
+                        - &highGear
+                          gear: HIGH
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     slaves:
                         - '@id': talon2
                           port: 2
-                          inverted: true
+                          inverted: false
                         - '@id': talon3
                           port: 3
-                          inverted: true
+                          inverted: false
             rightMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     <<: *leftMaster
@@ -44,15 +47,15 @@ logger:
                     reverseOutput: false
                     reverseSensor: false
                     perGearSettings:
-                        - gear: LOW
-                        - gear: HIGH
+                        - <<: *lowGear
+                        - <<: *highGear
                     slaves:
                         - '@id': talon5
                           port: 5
-                          inverted: true
+                          inverted: false
                         - '@id': talon6
                           port: 6
-                          inverted: true
+                          inverted: false
             startingOverrideAutoshift: true
             ahrs:
                 '@id': navX
@@ -68,10 +71,10 @@ logger:
                             rightMaster
                     piston:
                         '@id': driveShifter
-                        forward: 0
-                        reverse: 1
-                    lowGearPistonPos: kForward
-                    startingGear: LOW
+                        forward: 4
+                        reverse: 5
+                    lowGearPistonPos: kReverse
+                    startingGear: HIGH
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
             nodeID: 0
@@ -167,11 +170,19 @@ defaultCommands:
                     bufferTimeSeconds: 0.06
                 upshiftFwdThresh: 0.3
 startupCommand:
-    org.usfirst.frc.team449.robot.commands.general.RunRunnables:
-        '@id': runRunnables
-        runnables:
-            - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
-                poseEstimator
+    org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
+        '@id': startupCommand
+        commandSet:
+            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
+                '@id': startupSwitchGearCommand
+                subsystem:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                        drive
+            - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
+                '@id': runRunnables
+                runnables:
+                    - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
 teleopStartupCommand:
     org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.commands.StartCompressor:
         '@id': startCompressor
@@ -179,19 +190,19 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
-        '@id': autoCommand
-        subsystem:
-            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-                drive
-        voltsPerSecond: 0.25
-#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
-#        '@id': testAccel
+#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
+#        '@id': autoCommand
 #        subsystem:
 #            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
 #                drive
-#        velocity: 1
-#        seconds: 3
+#        voltsPerSecond: 0.15
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+        '@id': testAccel
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                drive
+        velocity: 1
+        seconds: 3
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater

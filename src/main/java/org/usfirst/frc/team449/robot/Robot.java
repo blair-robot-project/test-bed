@@ -8,6 +8,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.jetbrains.annotations.NotNull;
 import org.usfirst.frc.team449.robot.other.Clock;
 import org.yaml.snakeyaml.Yaml;
