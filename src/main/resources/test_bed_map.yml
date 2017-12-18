@@ -27,8 +27,20 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
+                          interceptVoltageFwd: 1.057617
+                          voltsPerFPSFwd: 0.409358
+                          voltsPerFPSSquaredFwd: 0.062057
+                          interceptVoltageRev: 0.935998
+                          voltsPerFPSRev: 0.409987
+                          voltsPerFPSSquaredRev: 0.078026
                         - &highGear
                           gear: HIGH
+                          interceptVoltageFwd: 1.243835
+                          voltsPerFPSFwd: 0.395011
+                          voltsPerFPSSquaredFwd: 0.083372
+                          interceptVoltageRev: 1.090946
+                          voltsPerFPSRev: 0.401701
+                          voltsPerFPSSquaredRev: 0.069027
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     slaves:
@@ -48,7 +60,19 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
+                          interceptVoltageFwd: 1.051197
+                          voltsPerFPSFwd: 0.406939
+                          voltsPerFPSSquaredFwd: 0.050006
+                          interceptVoltageRev: 0.898201
+                          voltsPerFPSRev: 0.407907
+                          voltsPerFPSSquaredRev: 0.075393
                         - <<: *highGear
+                          interceptVoltageFwd: 1.285610
+                          voltsPerFPSFwd: 0.393916
+                          voltsPerFPSSquaredFwd: 0.064527
+                          interceptVoltageRev: 1.047676
+                          voltsPerFPSRev: 0.398488
+                          voltsPerFPSSquaredRev: 0.067573
                     slaves:
                         - '@id': talon5
                           port: 5
@@ -163,8 +187,8 @@ defaultCommands:
                             0: 0.2
             autoshiftComponent:
                 '@id': autoshiftComponent
-                upshiftSpeed: 4
-                downshiftSpeed: 2
+                upshiftSpeed: 10
+                downshiftSpeed: 6
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
