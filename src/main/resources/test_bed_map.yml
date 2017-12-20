@@ -3,8 +3,8 @@ logger:
     '@id': logger
     loopTimeSecs: 0.025
     eventLogFilename: "/home/lvuser/logs/eventLog-"
-#    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
-    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
+    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+#    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
             '@id': drive
@@ -27,22 +27,24 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          interceptVoltageFwd: 1.057617
-                          voltsPerFPSFwd: 0.409358
-                          voltsPerFPSSquaredFwd: 0.062057
-                          interceptVoltageRev: 0.935998
-                          voltsPerFPSRev: 0.409987
-                          voltsPerFPSSquaredRev: 0.078026
+#                          interceptVoltageFwd: 1.057617
+#                          voltsPerFPSFwd: 0.409358
+#                          voltsPerFPSSquaredFwd: 0.062057
+#                          interceptVoltageRev: 0.935998
+#                          voltsPerFPSRev: 0.409987
+#                          voltsPerFPSSquaredRev: 0.078026
                         - &highGear
                           gear: HIGH
-                          interceptVoltageFwd: 1.243835
-                          voltsPerFPSFwd: 0.395011
-                          voltsPerFPSSquaredFwd: 0.083372
-                          interceptVoltageRev: 1.090946
-                          voltsPerFPSRev: 0.401701
-                          voltsPerFPSSquaredRev: 0.069027
+#                          interceptVoltageFwd: 1.243835
+#                          voltsPerFPSFwd: 0.395011
+#                          voltsPerFPSSquaredFwd: 0.083372
+#                          interceptVoltageRev: 1.090946
+#                          voltsPerFPSRev: 0.401701
+#                          voltsPerFPSSquaredRev: 0.069027
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
+                    statusFrameRatesMillis: !!map
+                        AnalogTempVbat : 15
                     slaves:
                         - '@id': talon2
                           port: 2
@@ -60,19 +62,19 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          interceptVoltageFwd: 1.051197
-                          voltsPerFPSFwd: 0.406939
-                          voltsPerFPSSquaredFwd: 0.050006
-                          interceptVoltageRev: 0.898201
-                          voltsPerFPSRev: 0.407907
-                          voltsPerFPSSquaredRev: 0.075393
+#                          interceptVoltageFwd: 1.051197
+#                          voltsPerFPSFwd: 0.406939
+#                          voltsPerFPSSquaredFwd: 0.050006
+#                          interceptVoltageRev: 0.898201
+#                          voltsPerFPSRev: 0.407907
+#                          voltsPerFPSSquaredRev: 0.075393
                         - <<: *highGear
-                          interceptVoltageFwd: 1.285610
-                          voltsPerFPSFwd: 0.393916
-                          voltsPerFPSSquaredFwd: 0.064527
-                          interceptVoltageRev: 1.047676
-                          voltsPerFPSRev: 0.398488
-                          voltsPerFPSSquaredRev: 0.067573
+#                          interceptVoltageFwd: 1.285610
+#                          voltsPerFPSFwd: 0.393916
+#                          voltsPerFPSSquaredFwd: 0.064527
+#                          interceptVoltageRev: 1.047676
+#                          voltsPerFPSRev: 0.398488
+#                          voltsPerFPSSquaredRev: 0.067573
                     slaves:
                         - '@id': talon5
                           port: 5
