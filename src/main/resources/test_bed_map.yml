@@ -5,6 +5,7 @@ logger:
     eventLogFilename: "/home/lvuser/logs/eventLog-"
     telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
 #    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
+    telemetryLogFilename: "/home/lvuser/logs/quasiLog-"
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
             '@id': drive
@@ -17,7 +18,7 @@ logger:
                     reverseOutput: false
                     reverseSensor: true
                     enableBrakeMode: true
-                    postEncoderGearing: 0.333333333
+                    postEncoderGearing: 0.49019607843137254901960784313725
                     feetPerRotation: 1
                     currentLimit: 50
                     voltageCompVoltage: 12
@@ -82,7 +83,7 @@ logger:
                         - '@id': talon6
                           port: 6
                           inverted: false
-            startingOverrideAutoshift: true
+            startingOverrideAutoshift: false
             ahrs:
                 '@id': navX
                 port: kMXP
@@ -99,7 +100,7 @@ logger:
                         '@id': driveShifter
                         forward: 4
                         reverse: 5
-                    lowGearPistonPos: kReverse
+                    lowGearPistonPos: kForward
                     startingGear: HIGH
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
@@ -216,19 +217,19 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
-#        '@id': autoCommand
-#        subsystem:
-#            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-#                drive
-#        voltsPerSecond: 0.15
-    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
-        '@id': testAccel
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
+        '@id': autoCommand
         subsystem:
             org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
                 drive
-        velocity: 1
-        seconds: 3
+        voltsPerSecond: 0.15
+#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+#        '@id': testAccel
+#        subsystem:
+#            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+#                drive
+#        velocity: 1
+#        seconds: 3
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
