@@ -5,14 +5,15 @@ logger:
     eventLogFilename: "/home/lvuser/logs/eventLog-"
     telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
 #    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
-    telemetryLogFilename: "/home/lvuser/logs/quasiLog-"
+#    telemetryLogFilename: "/home/lvuser/logs/quasiLog-"
     subsystems:
-        - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+        - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             '@id': drive
             leftMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     &leftMaster
                     '@id': leftMaster
+                    name: left
                     port: 1
                     invertInVoltage: true
                     reverseOutput: false
@@ -57,6 +58,7 @@ logger:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     <<: *leftMaster
                     '@id': rightMaster
+                    name: right
                     port: 4
                     invertInVoltage: false
                     reverseOutput: false
@@ -85,9 +87,10 @@ logger:
                           inverted: false
             startingOverrideAutoshift: false
             ahrs:
-                '@id': navX
-                port: kMXP
-                invertYaw: true
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+                    '@id': navX
+                    port: kMXP
+                    invertYaw: true
             shiftComponent:
                 org.usfirst.frc.team449.robot.components.ShiftComponent:
                     '@id': driveShiftComponent
@@ -100,8 +103,56 @@ logger:
                         '@id': driveShifter
                         forward: 4
                         reverse: 5
-                    lowGearPistonPos: kForward
                     startingGear: HIGH
+        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+            '@id': oi
+            gamepad:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    '@id': driverGamepad
+                    port: 1
+            rotThrottle:
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                    &rotThrottle
+                    '@id': rotThrottle
+                    stick: driverGamepad
+                    axis: 0
+                    smoothingTimeSecs: 0.04
+                    deadband: 0.05
+                    inverted: false
+                    polynomial:
+                        '@id': rotPoly
+                        powerToCoefficientMap: !!map
+                            2 : 1
+            fwdThrottle:
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
+                    '@id': fwdThrottle
+                    throttles:
+                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                            <<: *rotThrottle
+                            '@id': fwdTrigger
+                            axis: 3
+                            inverted: false
+                            polynomial:
+                                '@id': fwdPoly
+                                powerToCoefficientMap: !!map
+                                    2 : 1
+                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                            <<: *rotThrottle
+                            '@id': revTrigger
+                            axis: 2
+                            inverted: true
+                            polynomial:
+                                '@id': revPoly
+                                powerToCoefficientMap: !!map
+                                    2 : 1
+            invertDPad: false
+            dPadShift: 0.1
+            turnInPlaceRotScale: 0.5
+            scaleRotByFwdPoly:
+                '@id': scaleRotByFwdPoly
+                powerToCoefficientMap: !!map
+                    0.5: 0.6
+                    0: 0.2
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
             nodeID: 0
@@ -113,12 +164,18 @@ logger:
         - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
             '@id': poseEstimator
             subsystem:
-                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                     drive
             absolutePosAngleTolerance: 5
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+            leftMaster
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+            rightMaster
+        - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+            navX
 defaultCommands:
     - subsystem:
-        org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             drive
       command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
@@ -136,58 +193,11 @@ defaultCommands:
                 '@id': driveStraightLoopEntryTimer
                 bufferTimeSeconds: 0.15
             subsystem:
-                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                     drive
             oi:
                 org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
-                    '@id': oi
-                    gamepad:
-                        org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
-                            '@id': driverGamepad
-                            port: 1
-                    rotThrottle:
-                        org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                            &rotThrottle
-                            '@id': rotThrottle
-                            stick: driverGamepad
-                            axis: 0
-                            smoothingTimeSecs: 0.04
-                            deadband: 0.05
-                            inverted: false
-                            polynomial:
-                                '@id': rotPoly
-                                powerToCoefficientMap: !!map
-                                    2 : 1
-                    fwdThrottle:
-                        org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
-                            '@id': fwdThrottle
-                            throttles:
-                                - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                                    <<: *rotThrottle
-                                    '@id': fwdTrigger
-                                    axis: 3
-                                    inverted: false
-                                    polynomial:
-                                        '@id': fwdPoly
-                                        powerToCoefficientMap: !!map
-                                            2 : 1
-                                - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                                    <<: *rotThrottle
-                                    '@id': revTrigger
-                                    axis: 2
-                                    inverted: true
-                                    polynomial:
-                                        '@id': revPoly
-                                        powerToCoefficientMap: !!map
-                                            2 : 1
-                    invertDPad: false
-                    dPadShift: 0.1
-                    turnInPlaceRotScale: 0.5
-                    scaleRotByFwdPoly:
-                        '@id': scaleRotByFwdPoly
-                        powerToCoefficientMap: !!map
-                            0.5: 0.6
-                            0: 0.2
+                    oi
             autoshiftComponent:
                 '@id': autoshiftComponent
                 upshiftSpeed: 10
@@ -203,7 +213,7 @@ startupCommand:
             - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
                 '@id': startupSwitchGearCommand
                 subsystem:
-                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
             - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
                 '@id': runRunnables
@@ -220,13 +230,13 @@ autoStartupCommand:
     org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
         '@id': autoCommand
         subsystem:
-            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                 drive
         voltsPerSecond: 0.15
 #    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
 #        '@id': testAccel
 #        subsystem:
-#            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+#            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
 #                drive
 #        velocity: 1
 #        seconds: 3
@@ -234,7 +244,9 @@ updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
         updatables:
-            - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+            - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                 drive
             - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
                 oi
+            - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+                navX
