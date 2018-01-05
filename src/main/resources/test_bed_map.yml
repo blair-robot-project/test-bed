@@ -3,9 +3,20 @@ logger:
     '@id': logger
     loopTimeSecs: 0.025
     eventLogFilename: "/home/lvuser/logs/eventLog-"
+    #Pressurize
     telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
 #    telemetryLogFilename: "/home/lvuser/logs/highGearMaxAccel-"
-    telemetryLogFilename: "/home/lvuser/logs/quasiLog-"
+#    telemetryLogFilename: "/home/lvuser/logs/highGearFwdAccel-"
+#    telemetryLogFilename: "/home/lvuser/logs/highGearRevAccel-"
+#    telemetryLogFilename: "/home/lvuser/logs/highGearFwdQuasi-"
+#    telemetryLogFilename: "/home/lvuser/logs/highGearRevQuasi-"
+    #Pressurize
+#    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+#    telemetryLogFilename: "/home/lvuser/logs/lowGearMaxAccel-"
+#    telemetryLogFilename: "/home/lvuser/logs/lowGearFwdAccel-"
+#    telemetryLogFilename: "/home/lvuser/logs/lowGearRevAccel-"
+#    telemetryLogFilename: "/home/lvuser/logs/lowGearFwdQuasi-"
+#    telemetryLogFilename: "/home/lvuser/logs/lowGearRevQuasi-"
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
             '@id': drive
@@ -28,20 +39,8 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-#                          interceptVoltageFwd: 1.057617
-#                          voltsPerFPSFwd: 0.409358
-#                          voltsPerFPSSquaredFwd: 0.062057
-#                          interceptVoltageRev: 0.935998
-#                          voltsPerFPSRev: 0.409987
-#                          voltsPerFPSSquaredRev: 0.078026
                         - &highGear
                           gear: HIGH
-#                          interceptVoltageFwd: 1.243835
-#                          voltsPerFPSFwd: 0.395011
-#                          voltsPerFPSSquaredFwd: 0.083372
-#                          interceptVoltageRev: 1.090946
-#                          voltsPerFPSRev: 0.401701
-#                          voltsPerFPSSquaredRev: 0.069027
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -63,19 +62,7 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-#                          interceptVoltageFwd: 1.051197
-#                          voltsPerFPSFwd: 0.406939
-#                          voltsPerFPSSquaredFwd: 0.050006
-#                          interceptVoltageRev: 0.898201
-#                          voltsPerFPSRev: 0.407907
-#                          voltsPerFPSSquaredRev: 0.075393
                         - <<: *highGear
-#                          interceptVoltageFwd: 1.285610
-#                          voltsPerFPSFwd: 0.393916
-#                          voltsPerFPSSquaredFwd: 0.064527
-#                          interceptVoltageRev: 1.047676
-#                          voltsPerFPSRev: 0.398488
-#                          voltsPerFPSSquaredRev: 0.067573
                     slaves:
                         - '@id': talon5
                           port: 5
@@ -102,6 +89,7 @@ logger:
                         reverse: 5
                     lowGearPistonPos: kForward
                     startingGear: HIGH
+#                    startingGear: LOW
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
             nodeID: 0
@@ -201,6 +189,7 @@ startupCommand:
         '@id': startupCommand
         commandSet:
             - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
+#            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
                 '@id': startupSwitchGearCommand
                 subsystem:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
@@ -217,19 +206,22 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
-        '@id': autoCommand
-        subsystem:
-            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-                drive
-        voltsPerSecond: 0.15
-#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
-#        '@id': testAccel
+#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
+#        '@id': autoCommand
 #        subsystem:
 #            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
 #                drive
-#        velocity: 1
-#        seconds: 3
+#        voltsPerSecond: 0.15
+#        voltsPerSecond: -0.15
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+        '@id': testAccel
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                drive
+        velocity: 1
+#        velocity: -0.5
+#        velocity: 0.5
+        seconds: 3
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
