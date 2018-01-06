@@ -8,7 +8,6 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.jetbrains.annotations.NotNull;
 import org.usfirst.frc.team449.robot.other.Clock;
 import org.yaml.snakeyaml.Yaml;
@@ -143,12 +142,13 @@ public class Robot extends IterativeRobot {
         this.robotMap.getUpdater().run();
 
         //Run startup command if we start in auto.
-        if (!enabled) {
-            if (robotMap.getStartupCommand() != null) {
-                robotMap.getStartupCommand().start();
-            }
-            enabled = true;
-        }
+//        if (!enabled) {
+//            if (robotMap.getStartupCommand() != null) {
+//                robotMap.getStartupCommand().start();
+//            }
+//            enabled = true;
+//        }
+        robotMap.getStartupCommand().start();
 
         //Run the auto startup command
         if (robotMap.getAutoStartupCommand() != null) {
