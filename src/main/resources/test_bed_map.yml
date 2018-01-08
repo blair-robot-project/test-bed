@@ -16,7 +16,7 @@ logger:
                     reverseOutput: false
                     reverseSensor: true
                     enableBrakeMode: true
-                    postEncoderGearing: 0.49019607843137254901960784313725
+                    postEncoderGearing: 0.2266546
                     feetPerRotation: 1
                     currentLimit: 50
                     voltageCompVoltage: 12
@@ -26,19 +26,19 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          voltsPerFPSSquaredFwd: 0.062306
-                          voltsPerFPSFwd: 0.638969
+                          voltsPerFPSSquaredFwd: 0.1347448
+                          voltsPerFPSFwd: 1.381853
                           interceptVoltageFwd: 0.797588
-                          voltsPerFPSSquaredRev: 0.0768762
-                          voltsPerFPSRev: 0.6217917
+                          voltsPerFPSSquaredRev: 0.1662548
+                          voltsPerFPSRev: 1.344705
                           interceptVoltageRev: 0.7743393
                         - &highGear
                           gear: HIGH
-                          voltsPerFPSSquaredFwd: 0.093670
-                          voltsPerFPSFwd: 0.313972
+                          voltsPerFPSSquaredFwd: 0.2025735
+                          voltsPerFPSFwd: 0.6790052
                           interceptVoltageFwd: 0.986742
-                          voltsPerFPSSquaredRev: 0.099897
-                          voltsPerFPSRev: 0.304323
+                          voltsPerFPSSquaredRev: 0.2160402
+                          voltsPerFPSRev: 0.658138
                           interceptVoltageRev: 0.894144
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
@@ -61,18 +61,18 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          voltsPerFPSSquaredFwd: 0.054588
-                          voltsPerFPSFwd: 0.641138
+                          voltsPerFPSSquaredFwd: 0.1180536
+                          voltsPerFPSFwd: 1.386544
                           interceptVoltageFwd: 0.793247
-                          voltsPerFPSSquaredRev: 0.0613468
-                          voltsPerFPSRev: 0.6263795
+                          voltsPerFPSSquaredRev: 0.1326704
+                          voltsPerFPSRev: 1.354627
                           interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          voltsPerFPSSquaredFwd: 0.093752
-                          voltsPerFPSFwd: 0.306405
+                          voltsPerFPSSquaredFwd: 0.2027509
+                          voltsPerFPSFwd: 0.6626406
                           interceptVoltageFwd: 0.997928
-                          voltsPerFPSSquaredRev: 0.0945406
-                          voltsPerFPSRev: 0.3034501
+                          voltsPerFPSSquaredRev: 0.2044563
+                          voltsPerFPSRev: 0.6562502
                           interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
