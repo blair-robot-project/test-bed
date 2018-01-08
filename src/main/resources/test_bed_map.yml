@@ -32,6 +32,7 @@ logger:
                           voltsPerFPSSquaredRev: 0.1662548
                           voltsPerFPSRev: 1.344705
                           interceptVoltageRev: 0.7743393
+                          maxSpeed: 7.25
                         - &highGear
                           gear: HIGH
                           voltsPerFPSSquaredFwd: 0.2025735
@@ -40,6 +41,7 @@ logger:
                           voltsPerFPSSquaredRev: 0.2160402
                           voltsPerFPSRev: 0.658138
                           interceptVoltageRev: 0.894144
+                          maxSpeed: 13.7
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -189,12 +191,12 @@ defaultCommands:
                             0: 0.2
             autoshiftComponent:
                 '@id': autoshiftComponent
-                upshiftSpeed: 10
-                downshiftSpeed: 6
+                upshiftSpeed: 4.67207
+                downshiftSpeed: 2.5
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.3
+                upshiftFwdThresh: 0.529381
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
