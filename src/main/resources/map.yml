@@ -34,6 +34,12 @@ logger:
                           voltsPerFPSRev: 1.344705
                           interceptVoltageRev: 0.7743393
                           maxSpeed: 7.25
+                          kP: 0
+                          kI: 0
+                          kD: 0
+                          motionProfilePFwd: 1.5
+                          motionProfileIFwd: 0
+                          motionProfileDFwd: 0
                         - &highGear
                           gear: HIGH
                           voltsPerFPSSquaredFwd: 0.2025735
@@ -43,6 +49,12 @@ logger:
                           voltsPerFPSRev: 0.658138
                           interceptVoltageRev: 0.894144
                           maxSpeed: 13.7
+                          kP: 0
+                          kI: 0
+                          kD: 0
+                          motionProfilePFwd: 1.5
+                          motionProfileIFwd: 0
+                          motionProfileDFwd: 0
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -226,6 +238,21 @@ teleopStartupCommand:
         subsystem:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
+autoStartupCommand:
+    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.RunProfileTwoSides:
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        left:
+            &leftProfile
+            filename: "/home/lvuser/449_resources/forward100InProfile.csv"
+            inverted: false
+            velocityOnly: false
+            resetPosition: true
+        right:
+            <<: leftProfile
+            inverted: false
+        timeout: 20
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
