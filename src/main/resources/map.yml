@@ -27,11 +27,11 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          voltsPerFPSSquaredFwd: 0.1347448
-                          voltsPerFPSFwd: 1.381853
+                          kAFwd: 0.1347448
+                          kVFwd: 1.381853
                           interceptVoltageFwd: 0.797588
-                          voltsPerFPSSquaredRev: 0.1662548
-                          voltsPerFPSRev: 1.344705
+                          kARev: 0.1662548
+                          kVRev: 1.344705
                           interceptVoltageRev: 0.7743393
                           maxSpeed: 7.25
                           kP: 0
@@ -42,11 +42,11 @@ logger:
                           motionProfileDFwd: 0
                         - &highGear
                           gear: HIGH
-                          voltsPerFPSSquaredFwd: 0.2025735
-                          voltsPerFPSFwd: 0.6790052
+                          kAFwd: 0.2025735
+                          kVFwd: 0.6790052
                           interceptVoltageFwd: 0.986742
-                          voltsPerFPSSquaredRev: 0.2160402
-                          voltsPerFPSRev: 0.658138
+                          kARev: 0.2160402
+                          kVRev: 0.658138
                           interceptVoltageRev: 0.894144
                           maxSpeed: 13.7
                           kP: 0
@@ -77,18 +77,18 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          voltsPerFPSSquaredFwd: 0.1180536
-                          voltsPerFPSFwd: 1.386544
+                          kAFwd: 0.1180536
+                          kVFwd: 1.386544
                           interceptVoltageFwd: 0.793247
-                          voltsPerFPSSquaredRev: 0.1326704
-                          voltsPerFPSRev: 1.354627
+                          kARev: 0.1326704
+                          kVRev: 1.354627
                           interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          voltsPerFPSSquaredFwd: 0.2027509
-                          voltsPerFPSFwd: 0.6626406
+                          kAFwd: 0.2027509
+                          kVFwd: 0.6626406
                           interceptVoltageFwd: 0.997928
-                          voltsPerFPSSquaredRev: 0.2044563
-                          voltsPerFPSRev: 0.6562502
+                          kARev: 0.2044563
+                          kVRev: 0.6562502
                           interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
@@ -239,19 +239,21 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.RunProfileTwoSides:
+    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.RP2S:
+        '@id': autoStartCommand
         subsystem:
             org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                 drive
         left:
-            &leftProfile
             filename: "/home/lvuser/449_resources/forward100InProfile.csv"
             inverted: false
             velocityOnly: false
             resetPosition: true
         right:
-            <<: leftProfile
+            filename: "/home/lvuser/449_resources/forward100InProfile.csv"
             inverted: false
+            velocityOnly: false
+            resetPosition: true
         timeout: 20
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
