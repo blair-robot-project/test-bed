@@ -13,11 +13,11 @@ logger:
                     '@id': leftMaster
                     port: 1
                     invertInVoltage: true
-                    reverseOutput: false
+                    reverseOutput: true
                     reverseSensor: true
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
-                    feetPerRotation: 1
+                    feetPerRotation: 1.042920176494184
                     currentLimit: 50
                     voltageCompVoltage: 12
                     feedbackDevice: QuadEncoder
@@ -26,22 +26,23 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          voltsPerFPSSquaredFwd: 0.1347448
-                          voltsPerFPSFwd: 1.381853
+                          voltsPerFPSSquaredFwd: 0.12919953323
+                          voltsPerFPSFwd: 1.32498443423
                           interceptVoltageFwd: 0.797588
-                          voltsPerFPSSquaredRev: 0.1662548
-                          voltsPerFPSRev: 1.344705
+                          voltsPerFPSSquaredRev: 0.15941277553
+                          voltsPerFPSRev: 1.28936521731
                           interceptVoltageRev: 0.7743393
-                          maxSpeed: 7.25
+                          maxSpeed: 7.56
+                          motionProfilePFwd: 0.5
                         - &highGear
                           gear: HIGH
-                          voltsPerFPSSquaredFwd: 0.2025735
-                          voltsPerFPSFwd: 0.6790052
+                          voltsPerFPSSquaredFwd: 0.19423682134
+                          voltsPerFPSFwd: 0.65106152446
                           interceptVoltageFwd: 0.986742
-                          voltsPerFPSSquaredRev: 0.2160402
-                          voltsPerFPSRev: 0.658138
+                          voltsPerFPSSquaredRev: 0.20714931484
+                          voltsPerFPSRev: 0.63105309
                           interceptVoltageRev: 0.894144
-                          maxSpeed: 13.7
+                          maxSpeed: 14.29
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -63,18 +64,18 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          voltsPerFPSSquaredFwd: 0.1180536
-                          voltsPerFPSFwd: 1.386544
+                          voltsPerFPSSquaredFwd: 0.1131952403
+                          voltsPerFPSFwd: 1.32948238154
                           interceptVoltageFwd: 0.793247
-                          voltsPerFPSSquaredRev: 0.1326704
-                          voltsPerFPSRev: 1.354627
+                          voltsPerFPSSquaredRev: 0.12721050276
+                          voltsPerFPSRev: 1.29887888885
                           interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          voltsPerFPSSquaredFwd: 0.2027509
-                          voltsPerFPSFwd: 0.6626406
+                          voltsPerFPSSquaredFwd: 0.19440692065
+                          voltsPerFPSFwd: 0.63537039069
                           interceptVoltageFwd: 0.997928
-                          voltsPerFPSSquaredRev: 0.2044563
-                          voltsPerFPSRev: 0.6562502
+                          voltsPerFPSSquaredRev: 0.19604213688
+                          voltsPerFPSRev: 0.62924298023
                           interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
@@ -98,11 +99,10 @@ logger:
                             rightMaster
                     piston:
                         '@id': driveShifter
-                        forward: 4
-                        reverse: 5
+                        forward: 5
+                        reverse: 4
                     lowGearPistonPos: kForward
-                    startingGear: HIGH
-#                    startingGear: LOW
+                    startingGear: LOW
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
             nodeID: 0
@@ -191,8 +191,8 @@ defaultCommands:
                             0: 0.2
             autoshiftComponent:
                 '@id': autoshiftComponent
-                upshiftSpeed: 4.67207
-                downshiftSpeed: 2.5
+                upshiftSpeed: 4.87259606899
+                downshiftSpeed: 2.60730044124
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
@@ -201,12 +201,12 @@ startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
         commandSet:
-            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
-#            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
-                '@id': startupSwitchGearCommand
-                subsystem:
-                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-                        drive
+#            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
+##            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+#                '@id': startupSwitchGearCommand
+#                subsystem:
+#                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+#                        drive
             - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
                 '@id': runRunnables
                 runnables:
@@ -219,31 +219,24 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
-      '@id': autoStart
-      commandList:
-#        - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
-       - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
-            '@id': startupSwitchGearCommandautp
-            subsystem:
-                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-                    drive
-       - org.usfirst.frc.team449.robot.VoltageRamp:
-            '@id': autoCommand
-            subsystem:
-                org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-                    drive
-#            voltsPerSecond: 0.15
-            voltsPerSecond: -0.15
-#       - org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
-#              '@id': testAccel
-#              subsystem:
-#                  org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
-#                      drive
-##              velocity: -1
-#              velocity: -0.5
-##              velocity: 0.5
-#              seconds: 3
+    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.RunProfileTwoSides:
+        '@id': autoStartCommand
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                drive
+        left:
+            '@id': left
+            filename: "forward100InProfile.csv"
+            inverted: false
+            velocityOnly: false
+            resetPosition: true
+        right:
+            '@id': right
+            filename: "forward100InProfile.csv"
+            inverted: false
+            velocityOnly: false
+            resetPosition: true
+        timeout: 20
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
