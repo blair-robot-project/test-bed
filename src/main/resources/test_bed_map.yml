@@ -7,6 +7,7 @@ logger:
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
             '@id': drive
+            #Wheelbase: 2.16810362021
             leftMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     &leftMaster
@@ -233,7 +234,7 @@ autoStartupCommand:
         right:
             '@id': right
             filename: "forward100InProfile.csv"
-            inverted: false
+            inverted: true
             velocityOnly: false
             resetPosition: true
         timeout: 20
