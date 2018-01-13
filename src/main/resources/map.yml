@@ -7,6 +7,7 @@ logger:
     subsystems:
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             '@id': drive
+            #Wheelbase: 2.16810362021
             leftMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     &leftMaster
@@ -14,7 +15,7 @@ logger:
                     name: left
                     port: 1
                     invertInVoltage: true
-                    reverseOutput: false
+                    reverseOutput: true
                     reverseSensor: true
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
@@ -34,12 +35,8 @@ logger:
                           kVRev: 1.28936521731
                           interceptVoltageRev: 0.7743393
                           maxSpeed: 7.56
-                          kP: 0
-                          kI: 0
-                          kD: 0
+                          kP: 0.2
                           motionProfilePFwd: 0.5
-                          motionProfileIFwd: 0
-                          motionProfileDFwd: 0
                         - &highGear
                           gear: HIGH
                           kAFwd: 0.19423682134
@@ -49,9 +46,7 @@ logger:
                           kVRev: 0.63105309
                           interceptVoltageRev: 0.894144
                           maxSpeed: 14.29
-                          kP: 0
-                          kI: 0
-                          kD: 0
+                          kP: 0.4
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -94,7 +89,7 @@ logger:
                         - '@id': talon6
                           port: 6
                           inverted: false
-            startingOverrideAutoshift: true
+            startingOverrideAutoshift: false
             ahrs:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
                     '@id': navX
@@ -181,12 +176,12 @@ defaultCommands:
       command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
             '@id': defaultDriveCommand
-            kP: 0.0
+            kP: 0.0075
             kI: 0.0
-            kD: 0.0
+            kD: 0.01
             absoluteTolerance: 0
             toleranceBuffer: 25
-            deadband: 2
+            deadband: 1
             maxAngularVelToEnterLoop: 0.05
             inverted: false
             highGearAngularCoefficient: 2
@@ -206,16 +201,11 @@ defaultCommands:
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.25
+                upshiftFwdThresh: 0.52
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
         commandSet:
-            - org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
-                '@id': startupSwitchGearCommand
-                subsystem:
-                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                        drive
             - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
                 '@id': runRunnables
                 runnables:
