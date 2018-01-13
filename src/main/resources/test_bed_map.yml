@@ -163,7 +163,7 @@ defaultCommands:
       command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
             '@id': defaultDriveCommand
-            kP: 0.01
+            kP: 0.0075
             kI: 0.0
             kD: 0.01
             absoluteTolerance: 0
