@@ -135,7 +135,7 @@ logger:
             fwdThrottle:
                 org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
                     <<: *fwdThrottle
-                    '@id': fwdTrigger
+                    '@id': fwdThrottle
                     axis: 1
                     inverted: true
                     polynomial:
@@ -150,6 +150,10 @@ logger:
                 powerToCoefficientMap: !!map
                     0.5: 0.6
                     0: 0.2
+        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+            rotThrottle
+        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+            fwdThrottle
         - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
             '@id': pneumatics
             nodeID: 0
