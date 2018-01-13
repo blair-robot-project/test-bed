@@ -35,7 +35,7 @@ logger:
                           interceptVoltageRev: 0.7743393
                           maxSpeed: 7.56
                           motionProfilePFwd: 0.5
-#                          kP: 1
+                          kP: 0.2
                         - &highGear
                           gear: HIGH
                           voltsPerFPSSquaredFwd: 0.19423682134
@@ -45,6 +45,7 @@ logger:
                           voltsPerFPSRev: 0.63105309
                           interceptVoltageRev: 0.894144
                           maxSpeed: 14.29
+                          kP: 0.4
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -149,11 +150,12 @@ logger:
                           2 : 1
             invertDPad: false
             dPadShift: 0.05
-            turnInPlaceRotScale: 0.5
+            turnInPlaceRotScale: 0.8
             scaleRotByFwdPoly:
               '@id': scaleRotByFwdPoly
               powerToCoefficientMap: !!map
                   0.5: 0.6
+                  0: 0.2
 defaultCommands:
     - subsystem:
         org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
@@ -161,12 +163,12 @@ defaultCommands:
       command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
             '@id': defaultDriveCommand
-            kP: 0.0
+            kP: 0.01
             kI: 0.0
-            kD: 0.0
+            kD: 0.01
             absoluteTolerance: 0
             toleranceBuffer: 25
-            deadband: 2
+            deadband: 1
             maxAngularVelToEnterLoop: 0.05
             inverted: false
             highGearAngularCoefficient: 2
@@ -186,7 +188,7 @@ defaultCommands:
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.25
+                upshiftFwdThresh: 0.52
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
