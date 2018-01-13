@@ -18,7 +18,7 @@ logger:
                     reverseSensor: true
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
-                    feetPerRotation: 1
+                    feetPerRotation: 1.042920176494184
                     currentLimit: 50
                     voltageCompVoltage: 12
                     feedbackDevice: QuadEncoder
@@ -27,34 +27,31 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          kAFwd: 0.1347448
-                          kVFwd: 1.381853
+                          kAFwd: 0.12919953323
+                          kVFwd: 1.32498443423
                           interceptVoltageFwd: 0.797588
-                          kARev: 0.1662548
-                          kVRev: 1.344705
+                          kARev: 0.15941277553
+                          kVRev: 1.28936521731
                           interceptVoltageRev: 0.7743393
-                          maxSpeed: 7.25
+                          maxSpeed: 7.56
                           kP: 0
                           kI: 0
                           kD: 0
-                          motionProfilePFwd: 1.5
+                          motionProfilePFwd: 0.5
                           motionProfileIFwd: 0
                           motionProfileDFwd: 0
                         - &highGear
                           gear: HIGH
-                          kAFwd: 0.2025735
-                          kVFwd: 0.6790052
+                          kAFwd: 0.19423682134
+                          kVFwd: 0.65106152446
                           interceptVoltageFwd: 0.986742
-                          kARev: 0.2160402
-                          kVRev: 0.658138
+                          kARev: 0.20714931484
+                          kVRev: 0.63105309
                           interceptVoltageRev: 0.894144
-                          maxSpeed: 13.7
+                          maxSpeed: 14.29
                           kP: 0
                           kI: 0
                           kD: 0
-                          motionProfilePFwd: 1.5
-                          motionProfileIFwd: 0
-                          motionProfileDFwd: 0
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -77,18 +74,18 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          kAFwd: 0.1180536
-                          kVFwd: 1.386544
+                          kAFwd: 0.1131952403
+                          kVFwd: 1.32948238154
                           interceptVoltageFwd: 0.793247
-                          kARev: 0.1326704
-                          kVRev: 1.354627
+                          kARev: 0.12721050276
+                          kVRev: 1.29887888885
                           interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          kAFwd: 0.2027509
-                          kVFwd: 0.6626406
+                          kAFwd: 0.19440692065
+                          kVFwd: 0.63537039069
                           interceptVoltageFwd: 0.997928
-                          kARev: 0.2044563
-                          kVRev: 0.6562502
+                          kARev: 0.19604213688
+                          kVRev: 0.62924298023
                           interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
@@ -127,7 +124,7 @@ logger:
                     &rotThrottle
                     '@id': rotThrottle
                     stick: driverGamepad
-                    axis: 0
+                    axis: 4
                     smoothingTimeSecs: 0.04
                     deadband: 0.05
                     inverted: false
@@ -136,27 +133,15 @@ logger:
                         powerToCoefficientMap: !!map
                             2 : 1
             fwdThrottle:
-                org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
-                    '@id': fwdThrottle
-                    throttles:
-                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                            <<: *rotThrottle
-                            '@id': fwdTrigger
-                            axis: 3
-                            inverted: false
-                            polynomial:
-                                '@id': fwdPoly
-                                powerToCoefficientMap: !!map
-                                    2 : 1
-                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                            <<: *rotThrottle
-                            '@id': revTrigger
-                            axis: 2
-                            inverted: true
-                            polynomial:
-                                '@id': revPoly
-                                powerToCoefficientMap: !!map
-                                    2 : 1
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                    <<: *fwdThrottle
+                    '@id': fwdTrigger
+                    axis: 1
+                    inverted: true
+                    polynomial:
+                        '@id': fwdPoly
+                        powerToCoefficientMap: !!map
+                            2 : 1
             invertDPad: false
             dPadShift: 0.1
             turnInPlaceRotScale: 0.5
@@ -212,12 +197,12 @@ defaultCommands:
                     oi
             autoshiftComponent:
                 '@id': autoshiftComponent
-                upshiftSpeed: 4.67207
-                downshiftSpeed: 2.5
+                upshiftSpeed: 4.87259606899
+                downshiftSpeed: 2.60730044124
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.529381
+                upshiftFwdThresh: 0.25
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
@@ -238,23 +223,6 @@ teleopStartupCommand:
         subsystem:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
-autoStartupCommand:
-    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.RP2S:
-        '@id': autoStartCommand
-        subsystem:
-            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                drive
-        left:
-            filename: "/home/lvuser/449_resources/forward100InProfile.csv"
-            inverted: false
-            velocityOnly: false
-            resetPosition: true
-        right:
-            filename: "/home/lvuser/449_resources/forward100InProfile.csv"
-            inverted: false
-            velocityOnly: false
-            resetPosition: true
-        timeout: 20
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
