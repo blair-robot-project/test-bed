@@ -129,7 +129,7 @@ logger:
                             2 : 1
             fwdThrottle:
                 org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                    <<: *fwdThrottle
+                    <<: *rotThrottle
                     '@id': fwdThrottle
                     axis: 1
                     inverted: true
@@ -239,7 +239,7 @@ buttons:
             org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToHighGear:
                 '@id': upshiftCommand
                 subsystem:
-                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
         action: WHEN_PRESSED
     -   button:
@@ -253,6 +253,6 @@ buttons:
            org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
                 '@id': downshiftCommand
                 subsystem:
-                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
         action: WHEN_PRESSED
