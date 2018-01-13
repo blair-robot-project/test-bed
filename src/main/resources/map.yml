@@ -169,39 +169,41 @@ logger:
             rightMaster
         - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
             navX
+        - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
+              '@id': defaultDriveCommand
+              kP: 0.0075
+              kI: 0.0
+              kD: 0.01
+              absoluteTolerance: 0
+              toleranceBuffer: 25
+              deadband: 1
+              maxAngularVelToEnterLoop: 0.05
+              inverted: false
+              highGearAngularCoefficient: 2
+              driveStraightLoopEntryTimer:
+                  '@id': driveStraightLoopEntryTimer
+                  bufferTimeSeconds: 0.15
+              subsystem:
+                  org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                      drive
+              oi:
+                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                      oi
+              autoshiftComponent:
+                  '@id': autoshiftComponent
+                  upshiftSpeed: 4.87259606899
+                  downshiftSpeed: 2.60730044124
+                  upshiftDebouncer:
+                      '@id': upshiftDebouncer
+                      bufferTimeSeconds: 0.06
+                  upshiftFwdThresh: 0.52
 defaultCommands:
     - subsystem:
         org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             drive
       command:
         org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
-            '@id': defaultDriveCommand
-            kP: 0.0075
-            kI: 0.0
-            kD: 0.01
-            absoluteTolerance: 0
-            toleranceBuffer: 25
-            deadband: 1
-            maxAngularVelToEnterLoop: 0.05
-            inverted: false
-            highGearAngularCoefficient: 2
-            driveStraightLoopEntryTimer:
-                '@id': driveStraightLoopEntryTimer
-                bufferTimeSeconds: 0.15
-            subsystem:
-                org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                    drive
-            oi:
-                org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
-                    oi
-            autoshiftComponent:
-                '@id': autoshiftComponent
-                upshiftSpeed: 4.87259606899
-                downshiftSpeed: 2.60730044124
-                upshiftDebouncer:
-                    '@id': upshiftDebouncer
-                    bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.52
+            defaultDriveCommand
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
         '@id': startupCommand
