@@ -176,7 +176,7 @@ logger:
               kD: 0.01
               absoluteTolerance: 0
               toleranceBuffer: 25
-              deadband: 1
+              deadband: 2
               maxAngularVelToEnterLoop: 0.05
               inverted: false
               highGearAngularCoefficient: 2
