@@ -14,14 +14,13 @@ logger:
                     '@id': leftMaster
                     name: left
                     port: 1
-                    invertInVoltage: true
                     reverseOutput: true
                     reverseSensor: true
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
                     feetPerRotation: 1.042920176494184
                     currentLimit: 50
-                    voltageCompVoltage: 12
+                    enableVoltageComp: true
                     feedbackDevice: QuadEncoder
                     encoderCPR: 256
                     startingGear: LOW
@@ -50,7 +49,7 @@ logger:
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
-                        AnalogTempVbat : 15
+                        Status_4_AinTempVbat : 15
                     slaves:
                         - '@id': talon2
                           port: 2
@@ -64,7 +63,6 @@ logger:
                     '@id': rightMaster
                     name: right
                     port: 4
-                    invertInVoltage: false
                     reverseOutput: false
                     reverseSensor: false
                     perGearSettings:
