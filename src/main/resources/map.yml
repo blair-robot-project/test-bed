@@ -15,7 +15,7 @@ logger:
                     name: left
                     port: 1
                     reverseOutput: true
-                    reverseSensor: true
+                    reverseSensor: false
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
                     feetPerRotation: 1.042920176494184
@@ -53,10 +53,10 @@ logger:
                     slaves:
                         - '@id': talon2
                           port: 2
-                          inverted: false
+                          inverted: true
                         - '@id': talon3
                           port: 3
-                          inverted: false
+                          inverted: true
             rightMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     <<: *leftMaster
