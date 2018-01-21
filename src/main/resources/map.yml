@@ -169,11 +169,10 @@ logger:
             navX
         - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
               '@id': defaultDriveCommand
-              kP: 0.0075
+              kP: 0.009
               kI: 0.0
-              kD: 0.01
+              kD: 0.03
               absoluteTolerance: 0
-              toleranceBuffer: 25
               deadband: 2
               maxAngularVelToEnterLoop: 0.05
               inverted: false
