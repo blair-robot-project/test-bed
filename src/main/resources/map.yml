@@ -19,7 +19,7 @@ logger:
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
                     feetPerRotation: 1.042920176494184
-                    currentLimit: 50
+                    currentLimit: 40
                     enableVoltageComp: true
                     feedbackDevice: QuadEncoder
                     encoderCPR: 256
@@ -119,7 +119,7 @@ logger:
                     stick: driverGamepad
                     axis: 4
                     smoothingTimeSecs: 0.04
-                    deadband: 0.05
+                    deadband: 0.075
                     inverted: false
                     polynomial:
                         '@id': rotPoly
@@ -169,12 +169,12 @@ logger:
             navX
         - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
               '@id': defaultDriveCommand
-              kP: 0.009
+              kP: 0.0075
               kI: 0.0
               kD: 0.03
               absoluteTolerance: 0
               deadband: 2
-              maxAngularVelToEnterLoop: 0.05
+              maxAngularVelToEnterLoop: 15
               inverted: false
               highGearAngularCoefficient: 2
               driveStraightLoopEntryTimer:
