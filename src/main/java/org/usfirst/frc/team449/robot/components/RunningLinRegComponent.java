@@ -9,34 +9,29 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A component that does a running linear regression with a finite window.
  */
-public class RunningLinRegComponent{
+public class RunningLinRegComponent {
 
     /**
      * Buffers holding the x and y values that will eventually need to be subtracted from the sum when they leave the window.
      */
     @NotNull
     private final CircularBuffer xBuffer, yBuffer;
-
-    /**
-     * Running sum of the past bufferSize x's and y's, respectively.
-     */
-    private double xSum, ySum;
-
-    /**
-     * Running sum of the past bufferSize x^2's.
-     */
-    private double xSquaredSum;
-
-    /**
-     * Running sum of the past bufferSize x*y's.
-     */
-    private double xySum;
-
     /**
      * The maximum number of points to take the linear regression over.
      */
     private final double bufferSize;
-
+    /**
+     * Running sum of the past bufferSize x's and y's, respectively.
+     */
+    private double xSum, ySum;
+    /**
+     * Running sum of the past bufferSize x^2's.
+     */
+    private double xSquaredSum;
+    /**
+     * Running sum of the past bufferSize x*y's.
+     */
+    private double xySum;
     /**
      * The number of points currently in the buffer.
      */
@@ -53,7 +48,7 @@ public class RunningLinRegComponent{
      * @param bufferSize The maximum number of points to take the linear regression over.
      */
     @JsonCreator
-    public RunningLinRegComponent(@JsonProperty(required = true) int bufferSize){
+    public RunningLinRegComponent(@JsonProperty(required = true) int bufferSize) {
         xBuffer = new CircularBuffer(bufferSize);
         yBuffer = new CircularBuffer(bufferSize);
         numPoints = 0;
@@ -65,16 +60,16 @@ public class RunningLinRegComponent{
     /**
      * @return The current slope of the linear regression line.
      */
-    public double getSlope(){
-        return (xySum - xSum*ySum/numPoints)/(numPoints-1)/ //Covariance
-                (xSquaredSum/numPoints)-Math.pow(xSum/numPoints, 2); //Variance
+    public double getSlope() {
+        return (xySum - xSum * ySum / numPoints) / (numPoints - 1) / //Covariance
+                (xSquaredSum / numPoints) - Math.pow(xSum / numPoints, 2); //Variance
     }
 
     /**
      * @return The current y-intercept of the linear regression line.
      */
-    public double getIntercept(){
-        return ySum/numPoints - getSlope()*xSum/numPoints;
+    public double getIntercept() {
+        return ySum / numPoints - getSlope() * xSum / numPoints;
     }
 
     /**
@@ -83,15 +78,15 @@ public class RunningLinRegComponent{
      * @param x The x point to add.
      * @param y The y point to add
      */
-    public void addPoint(double x, double y){
-        if(numPoints >= bufferSize){
+    public void addPoint(double x, double y) {
+        if (numPoints >= bufferSize) {
             //Pop the last point and remove it from the sums
             backX = xBuffer.removeLast();
             backY = yBuffer.removeLast();
             xSum -= backX;
             ySum -= backY;
-            xSquaredSum -= backX*backX;
-            xySum -= backX*backY;
+            xSquaredSum -= backX * backX;
+            xySum -= backX * backY;
         } else {
             numPoints++;
         }
@@ -99,7 +94,7 @@ public class RunningLinRegComponent{
         yBuffer.addFirst(y);
         xSum += x;
         ySum += y;
-        xSquaredSum += x*x;
-        xySum += x*y;
+        xSquaredSum += x * x;
+        xySum += x * y;
     }
 }

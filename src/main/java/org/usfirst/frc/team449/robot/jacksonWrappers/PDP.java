@@ -14,29 +14,30 @@ import org.usfirst.frc.team449.robot.generalInterfaces.updatable.Updatable;
  * An object representing the Power Distribution Panel that logs power, current, and resistance.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class PDP extends PowerDistributionPanel implements Loggable, Updatable{
+public class PDP extends PowerDistributionPanel implements Loggable, Updatable {
 
-    private final RunningLinRegComponent voltagePerCurrentLinreg;
+    private final RunningLinRegComponent voltagePerCurrentLinReg;
 
     /**
      * Default constructor.
      *
-     * @param canID CAN ID of the PDP. Defaults to 0.
+     * @param canID                   CAN ID of the PDP. Defaults to 0.
      * @param voltagePerCurrentLinReg The component for doing linear regression to find the resistance.
      */
     @JsonCreator
     public PDP(int canID,
-               @NotNull @JsonProperty(required = true) RunningLinRegComponent voltagePerCurrentLinReg){
+               @NotNull @JsonProperty(required = true) RunningLinRegComponent voltagePerCurrentLinReg) {
         super(canID);
-        this.voltagePerCurrentLinreg = voltagePerCurrentLinReg;
+        this.voltagePerCurrentLinReg = voltagePerCurrentLinReg;
     }
 
     /**
      * Get the resistance of the wires leading to the PDP.
+     *
      * @return Resistance in ohms.
      */
-    public double getResistance(){
-        return voltagePerCurrentLinreg.getSlope();
+    public double getResistance() {
+        return voltagePerCurrentLinReg.getSlope();
     }
 
     /**
@@ -88,6 +89,6 @@ public class PDP extends PowerDistributionPanel implements Loggable, Updatable{
     @Override
     public void update() {
         //Calculate running linear regression
-        voltagePerCurrentLinreg.addPoint(getTotalCurrent(), getVoltage());
+        voltagePerCurrentLinReg.addPoint(getTotalCurrent(), getVoltage());
     }
 }
