@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.usfirst.frc.team449.robot.components.PathRequester;
 import org.usfirst.frc.team449.robot.generalInterfaces.poseCommand.PoseCommand;
 import org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.PoseEstimator;
+import org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.AHRS.SubsystemAHRS;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.SubsystemMPTwoSides;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.GetPathFromJetson;
@@ -20,13 +22,13 @@ import java.util.function.DoubleSupplier;
  * A command that drives the given subsystem to an absolute position.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class GoToPosition<T extends SubsystemMPTwoSides & SubsystemAHRS> extends CommandGroup implements PoseCommand {
+public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemAHRS> extends CommandGroup implements PoseCommand {
 
     /**
      * The object to get robot pose from.
      */
     @NotNull
-    private final PoseEstimator poseEstimator;
+    private final UnidirectionalPoseEstimator poseEstimator;
     /**
      * The subsystem to run the path gotten from the Jetson on.
      */
@@ -61,7 +63,7 @@ public class GoToPosition<T extends SubsystemMPTwoSides & SubsystemAHRS> extends
     @JsonCreator
     public GoToPosition(@NotNull @JsonProperty(required = true) T subsystem,
                         @NotNull @JsonProperty(required = true) PathRequester pathRequester,
-                        @NotNull @JsonProperty(required = true) PoseEstimator poseEstimator,
+                        @NotNull @JsonProperty(required = true) UnidirectionalPoseEstimator poseEstimator,
                         @Nullable Double x,
                         @Nullable Double y,
                         @Nullable Double theta,

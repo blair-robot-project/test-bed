@@ -167,18 +167,6 @@ logger:
             rightMaster
         - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
             navX
-        - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
-              '@id': goToPosition
-              poseEstimator:
-                  - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
-                      poseEstimator
-              pathRequester:
-                  - org.usfirst.frc.team449.robot.components.PathRequester:
-                      '@id': autoPath
-                      address: "2"
-        - org.usfirst.frc.team449.robot.commands.general.CommandSequence:
-              '@id': autoStartupCommand
-
         - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
               '@id': defaultDriveCommand
               kP: 0.0075
@@ -267,3 +255,195 @@ buttons:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
         action: WHEN_PRESSED
+autoStartupCommand: #right start, left switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+        '@id': simpleSwitchStartRightLeftSwitch
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': rightPlatformZone
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 19
+                y: 4
+                theta: 90
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': leftPlatformZone
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 19
+                y: 23
+                theta: -180
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': leftSwitch
+                poseEstimator:
+                   org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                      poseEstimator
+                pathRequester:
+                   org.usfirst.frc.team449.robot.components.PathRequester:
+                      '@id': autoPath
+                      # This is Unchecked, just a place holder
+                      address: "2"
+                x: 14
+                y: 23
+                theta: -90
+                deltaTime: .05
+autoStartupCommand: #center start, left switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+        '@id': autoStartupCommandRightSide
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goLeftAndForward
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 6
+                y: 23
+                theta: 0
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goForwardToSwitchAndTurn
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 14
+                y: 23
+                theta: 90
+                deltaTime: .05
+autoStartupCommand: #left start, left switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+        '@id': autoStartupCommand
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goForwardToSwitchAndTurn
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 14
+                y: 23
+                theta: 90
+                deltaTime: .05
+autoStartupCommand: #left start, right switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+        '@id': autoStartupCommand
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goForwardPassedSwitch
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 19
+                y: 23
+                theta: -90
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goThroughPlatfomZone
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 19
+                y: 4
+                theta: -180
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goToSwitchAndTurn
+                poseEstimator:
+                   org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                      poseEstimator
+                pathRequester:
+                   org.usfirst.frc.team449.robot.components.PathRequester:
+                      '@id': autoPath
+                      # This is Unchecked, just a place holder
+                      address: "2"
+                x: 14
+                y: 4
+                theta: 90
+                deltaTime: .05
+autoStartupCommand: #center start, right switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+        '@id': autoStartupCommand
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goRightAndUp
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 6
+                y: 4
+                theta: 0
+                deltaTime: .05
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goForwardToSwitchAndTurn
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 14
+                y: 4
+                theta: 90
+                deltaTime: .05
+autoStartupCommand: #right start, right switch
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+    '@id': autoStartupCommand
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': goForwardToSwitchAndTurn
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+                pathRequester:
+                    org.usfirst.frc.team449.robot.components.PathRequester:
+                        '@id': autoPath
+                        # This is Unchecked, just a place holder
+                        address: "2"
+                x: 14
+                y: 1
+                theta: 90
+                deltaTime: .05
