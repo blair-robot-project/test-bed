@@ -43,6 +43,11 @@ public class RunningLinRegComponent {
     private double backX, backY;
 
     /**
+     * The denominator of the slope calculation equation. Field to avoid garbage collection
+     */
+    private double denominator;
+
+    /**
      * Default constructor.
      *
      * @param bufferSize The maximum number of points to take the linear regression over.
@@ -61,8 +66,18 @@ public class RunningLinRegComponent {
      * @return The current slope of the linear regression line.
      */
     public double getSlope() {
+        //Avoid div by 0
+        if(numPoints < 2){
+            return 0;
+        }
+        denominator = (xSquaredSum / numPoints) - Math.pow(xSum / numPoints, 2);
+        if (denominator == 0){
+            return 0;
+        }
+
+        //Covariance over variance gets the slope
         return (xySum - xSum * ySum / numPoints) / (numPoints - 1) / //Covariance
-                (xSquaredSum / numPoints) - Math.pow(xSum / numPoints, 2); //Variance
+                denominator; //Variance
     }
 
     /**
