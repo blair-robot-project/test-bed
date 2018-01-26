@@ -167,6 +167,18 @@ logger:
             rightMaster
         - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
             navX
+        - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+              '@id': goToPosition
+              poseEstimator:
+                  - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                      poseEstimator
+              pathRequester:
+                  - org.usfirst.frc.team449.robot.components.PathRequester:
+                      '@id': autoPath
+                      address: "2"
+        - org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+              '@id': autoStartupCommand
+
         - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
               '@id': defaultDriveCommand
               kP: 0.0075
