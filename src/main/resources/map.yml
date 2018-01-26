@@ -19,7 +19,7 @@ logger:
                     enableBrakeMode: true
                     postEncoderGearing: 0.2266546
                     feetPerRotation: 1.042920176494184
-                    currentLimit: 40
+                    currentLimit: 35
                     enableVoltageComp: true
                     feedbackDevice: QuadEncoder
                     encoderCPR: 256
@@ -126,23 +126,38 @@ logger:
                         powerToCoefficientMap: !!map
                             2 : 1
             fwdThrottle:
-                org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
-                    <<: *rotThrottle
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
                     '@id': fwdThrottle
-                    axis: 1
-                    inverted: true
-                    polynomial:
-                        '@id': fwdPoly
-                        powerToCoefficientMap: !!map
-                            2 : 1
+                    throttles:
+                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                            <<: *rotThrottle
+                            '@id': posThrottle
+                            axis: 3
+                            inverted: false
+                            deadband: 0
+                            polynomial:
+                                '@id': posPoly
+                                powerToCoefficientMap: !!map
+                                    2 : 1
+                        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                              <<: *rotThrottle
+                              '@id': negThrottle
+                              axis: 2
+                              inverted: true
+                              deadband: 0
+                              polynomial:
+                                  '@id': negPoly
+                                  powerToCoefficientMap: !!map
+                                      2 : 1
             invertDPad: false
             dPadShift: 0.1
             turnInPlaceRotScale: 0.5
             scaleRotByFwdPoly:
                 '@id': scaleRotByFwdPoly
                 powerToCoefficientMap: !!map
-                    0.5: 0.6
+                    #0.5: 0.6
                     0: 0.2
+                    1 : 0.75
         - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
             rotThrottle
         - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
