@@ -33,8 +33,8 @@ logger:
                           kARev: 0.15941277553
                           kVRev: 1.28936521731
                           interceptVoltageRev: 0.7743393
-                          maxSpeed: 7.56
-                          kP: 0.2
+                          maxSpeed: 8.7
+                          kP: 0.15
                           motionProfilePFwd: 0.5
                         - &highGear
                           gear: HIGH
@@ -44,8 +44,8 @@ logger:
                           kARev: 0.20714931484
                           kVRev: 0.63105309
                           interceptVoltageRev: 0.894144
-                          maxSpeed: 14.29
-                          kP: 0.4
+                          maxSpeed: 15
+                          kP: 0.3
                     minNumPointsInBottomBuffer: 10
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
@@ -67,19 +67,19 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          kAFwd: 0.1131952403
-                          kVFwd: 1.32948238154
-                          interceptVoltageFwd: 0.793247
-                          kARev: 0.12721050276
-                          kVRev: 1.29887888885
-                          interceptVoltageRev: 0.7668543
+#                          kAFwd: 0.1131952403
+#                          kVFwd: 1.32948238154
+#                          interceptVoltageFwd: 0.793247
+#                          kARev: 0.12721050276
+#                          kVRev: 1.29887888885
+#                          interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          kAFwd: 0.19440692065
-                          kVFwd: 0.63537039069
-                          interceptVoltageFwd: 0.997928
-                          kARev: 0.19604213688
-                          kVRev: 0.62924298023
-                          interceptVoltageRev: 0.8839750
+#                          kAFwd: 0.19440692065
+#                          kVFwd: 0.63537039069
+#                          interceptVoltageFwd: 0.997928
+#                          kARev: 0.19604213688
+#                          kVRev: 0.62924298023
+#                          interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
                           port: 5
@@ -152,6 +152,7 @@ logger:
             invertDPad: false
             dPadShift: 0.1
             turnInPlaceRotScale: 0.5
+            rescaleOutputs: true
             scaleRotByFwdPoly:
                 '@id': scaleRotByFwdPoly
                 powerToCoefficientMap: !!map
@@ -170,7 +171,7 @@ logger:
               port: 0
               oversampleBits: 0
               averageBits: 0
-        - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+        - org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
             '@id': poseEstimator
             subsystem:
                 org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
@@ -203,8 +204,8 @@ logger:
                       oi
               autoshiftComponent:
                   '@id': autoshiftComponent
-                  upshiftSpeed: 4.87259606899
-                  downshiftSpeed: 2.60730044124
+                  upshiftSpeed: 5.5
+                  downshiftSpeed: 3
                   upshiftDebouncer:
                       '@id': upshiftDebouncer
                       bufferTimeSeconds: 0.06
@@ -223,7 +224,7 @@ startupCommand:
             - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
                 '@id': runRunnables
                 runnables:
-                    - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                    - org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
                         poseEstimator
 teleopStartupCommand:
     org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.commands.StartCompressor:
