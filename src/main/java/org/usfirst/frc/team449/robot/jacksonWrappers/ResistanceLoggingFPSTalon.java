@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -76,6 +77,7 @@ public class ResistanceLoggingFPSTalon extends FPSTalon {
      * @param controlFrameRatesMillis    The update rate, in milliseconds, for each of the control frame.
      * @param slaves                     The other {@link com.ctre.phoenix.motorcontrol.can.TalonSRX}s that are slaved to this one.
      */
+    @JsonCreator
     public ResistanceLoggingFPSTalon(@JsonProperty(required = true) int port,
                                      @Nullable String name,
                                      boolean reverseOutput,
