@@ -67,19 +67,19 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-#                          kAFwd: 0.1131952403
-#                          kVFwd: 1.32948238154
-#                          interceptVoltageFwd: 0.793247
-#                          kARev: 0.12721050276
-#                          kVRev: 1.29887888885
-#                          interceptVoltageRev: 0.7668543
+                          kAFwd: 0.1131952403
+                          kVFwd: 1.32948238154
+                          interceptVoltageFwd: 0.793247
+                          kARev: 0.12721050276
+                          kVRev: 1.29887888885
+                          interceptVoltageRev: 0.7668543
                         - <<: *highGear
-#                          kAFwd: 0.19440692065
-#                          kVFwd: 0.63537039069
-#                          interceptVoltageFwd: 0.997928
-#                          kARev: 0.19604213688
-#                          kVRev: 0.62924298023
-#                          interceptVoltageRev: 0.8839750
+                          kAFwd: 0.19440692065
+                          kVFwd: 0.63537039069
+                          interceptVoltageFwd: 0.997928
+                          kARev: 0.19604213688
+                          kVRev: 0.62924298023
+                          interceptVoltageRev: 0.8839750
                     slaves:
                         - '@id': talon5
                           port: 5
@@ -117,14 +117,15 @@ logger:
                     &rotThrottle
                     '@id': rotThrottle
                     stick: driverGamepad
-                    axis: 4
+                    axis: 0
                     smoothingTimeSecs: 0.04
                     deadband: 0.075
                     inverted: false
                     polynomial:
                         '@id': rotPoly
                         powerToCoefficientMap: !!map
-                            2 : 1
+                            1 : 1
+                            3 : 2
             fwdThrottle:
                 org.usfirst.frc.team449.robot.oi.throttles.ThrottleSum:
                     '@id': fwdThrottle
@@ -134,7 +135,7 @@ logger:
                             '@id': posThrottle
                             axis: 3
                             inverted: false
-                            deadband: 0
+                            deadband: 0.05
                             polynomial:
                                 '@id': posPoly
                                 powerToCoefficientMap: !!map
@@ -144,7 +145,7 @@ logger:
                               '@id': negThrottle
                               axis: 2
                               inverted: true
-                              deadband: 0
+                              deadband: 0.05
                               polynomial:
                                   '@id': negPoly
                                   powerToCoefficientMap: !!map
@@ -209,7 +210,7 @@ logger:
                   upshiftDebouncer:
                       '@id': upshiftDebouncer
                       bufferTimeSeconds: 0.06
-                  upshiftFwdThresh: 0.52
+                  upshiftFwdThresh: 0.3
 defaultCommands:
     - subsystem:
         org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
