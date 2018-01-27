@@ -106,7 +106,7 @@ logger:
                         forward: 4
                         reverse: 5
                     startingGear: LOW
-        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.RampedOIArcadeWithDPad:
             '@id': oi
             gamepad:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
@@ -154,6 +154,10 @@ logger:
             dPadShift: 0.1
             turnInPlaceRotScale: 0.5
             rescaleOutputs: true
+            fwdRamp:
+                maxChangePerSecond: 3
+            rotRamp:
+                maxChangePerSecond: 3
             scaleRotByFwdPoly:
                 '@id': scaleRotByFwdPoly
                 powerToCoefficientMap: !!map
@@ -201,7 +205,7 @@ logger:
                   org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                       drive
               oi:
-                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.RampedOIArcadeWithDPad:
                       oi
               autoshiftComponent:
                   '@id': autoshiftComponent
