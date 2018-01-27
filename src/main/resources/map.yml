@@ -14,7 +14,7 @@ logger:
             '@id': drive
             #Wheelbase: 2.16810362021
             leftMaster:
-                org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+                org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     &leftMaster
                     '@id': leftMaster
                     name: left
@@ -67,7 +67,7 @@ logger:
                             port: 3
                             inverted: true
             rightMaster:
-                org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+                org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     <<: *leftMaster
                     '@id': rightMaster
                     name: right
@@ -106,9 +106,9 @@ logger:
                 org.usfirst.frc.team449.robot.components.ShiftComponent:
                     '@id': driveShiftComponent
                     otherShiftables:
-                        - org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                             leftMaster
-                        - org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                             rightMaster
                     piston:
                         '@id': driveShifter
@@ -187,9 +187,9 @@ logger:
                 org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                     drive
             absolutePosAngleTolerance: 5
-        - org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
             leftMaster
-        - org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
             rightMaster
         - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
             navX
