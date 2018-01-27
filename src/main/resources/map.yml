@@ -4,7 +4,7 @@ logger:
     loopTimeSecs: 0.025
     eventLogFilename: "/home/lvuser/logs/eventLog-"
     telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
-    subsystems:
+    loggables:
         - org.usfirst.frc.team449.robot.jacksonWrappers.PDP:
             '@id': PDP
             canID: 4
@@ -60,12 +60,12 @@ logger:
                     statusFrameRatesMillis: !!map
                         Status_4_AinTempVbat : 15
                     slaves:
-                        - '@id': talon2
-                          port: 2
-                          inverted: true
-                        - '@id': talon3
-                          port: 3
-                          inverted: true
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 2
+                            inverted: true
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 3
+                            inverted: true
             rightMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.ResistanceLoggingFPSTalon:
                     <<: *leftMaster
@@ -90,12 +90,12 @@ logger:
                           kVRev: 0.62924298023
                           interceptVoltageRev: 0.8839750
                     slaves:
-                        - '@id': talon5
-                          port: 5
-                          inverted: false
-                        - '@id': talon6
-                          port: 6
-                          inverted: false
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 5
+                            inverted: false
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 6
+                            inverted: false
             startingOverrideAutoshift: false
             ahrs:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
