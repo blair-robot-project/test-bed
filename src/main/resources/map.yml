@@ -106,7 +106,7 @@ logger:
                         forward: 4
                         reverse: 5
                     startingGear: LOW
-        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.RampedOIArcadeWithDPad:
+        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
             '@id': oi
             gamepad:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
@@ -154,10 +154,6 @@ logger:
             dPadShift: 0.1
             turnInPlaceRotScale: 0.5
             rescaleOutputs: true
-            fwdRamp:
-                maxChangePerSecond: 3
-            rotRamp:
-                maxChangePerSecond: 3
             scaleRotByFwdPoly:
                 '@id': scaleRotByFwdPoly
                 powerToCoefficientMap: !!map
@@ -188,7 +184,7 @@ logger:
             rightMaster
         - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
             navX
-        - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
+        - org.usfirst.frc.team449.robot.commands.multiInterface.drive.RampedShiftingDrive:
               '@id': defaultDriveCommand
               kP: 0.0075
               kI: 0.0
@@ -198,6 +194,8 @@ logger:
               maxAngularVelToEnterLoop: 15
               inverted: false
               highGearAngularCoefficient: 2
+              rampComponent:
+                    maxChangePerSecond: 3
               driveStraightLoopEntryTimer:
                   '@id': driveStraightLoopEntryTimer
                   bufferTimeSeconds: 0.15
@@ -205,7 +203,7 @@ logger:
                   org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                       drive
               oi:
-                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.RampedOIArcadeWithDPad:
+                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
                       oi
               autoshiftComponent:
                   '@id': autoshiftComponent
@@ -220,7 +218,7 @@ defaultCommands:
         org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             drive
       command:
-        org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXShiftingDefaultDrive:
+        org.usfirst.frc.team449.robot.commands.multiInterface.drive.RampedShiftingDrive:
             defaultDriveCommand
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:

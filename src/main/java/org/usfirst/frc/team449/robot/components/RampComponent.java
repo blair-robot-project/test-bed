@@ -51,4 +51,8 @@ public class RampComponent implements DoubleUnaryOperator {
         lastTime = Clock.currentTimeMillis();
         return lastValue;
     }
+
+    public RampComponent clone(){
+        return new RampComponent(maxChangePerMillis*1000.);
+    }
 }
