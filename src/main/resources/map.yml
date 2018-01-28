@@ -4,7 +4,12 @@ logger:
     loopTimeSecs: 0.025
     eventLogFilename: "/home/lvuser/logs/eventLog-"
     telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
-    subsystems:
+    loggables:
+        - org.usfirst.frc.team449.robot.jacksonWrappers.PDP:
+            '@id': PDP
+            canID: 4
+            voltagePerCurrentLinReg:
+                bufferSize: 100
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             '@id': drive
             #Wheelbase: 2.16810362021
@@ -14,6 +19,10 @@ logger:
                     '@id': leftMaster
                     name: left
                     port: 1
+                    PDP:
+                        org.usfirst.frc.team449.robot.jacksonWrappers.PDP: PDP
+                    voltagePerCurrentLinReg:
+                        bufferSize: 100
                     reverseOutput: true
                     reverseSensor: false
                     enableBrakeMode: true
@@ -51,12 +60,12 @@ logger:
                     statusFrameRatesMillis: !!map
                         Status_4_AinTempVbat : 15
                     slaves:
-                        - '@id': talon2
-                          port: 2
-                          inverted: true
-                        - '@id': talon3
-                          port: 3
-                          inverted: true
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 2
+                            inverted: true
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 3
+                            inverted: true
             rightMaster:
                 org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
                     <<: *leftMaster
@@ -81,12 +90,12 @@ logger:
                           kVRev: 0.62924298023
                           interceptVoltageRev: 0.8839750
                     slaves:
-                        - '@id': talon5
-                          port: 5
-                          inverted: false
-                        - '@id': talon6
-                          port: 6
-                          inverted: false
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 5
+                            inverted: false
+                        - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+                            port: 6
+                            inverted: false
             startingOverrideAutoshift: false
             ahrs:
                 org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
@@ -250,6 +259,8 @@ updater:
                 oi
             - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
                 navX
+            - org.usfirst.frc.team449.robot.jacksonWrappers.PDP:
+                PDP
 buttons:
     -   button:
             org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
