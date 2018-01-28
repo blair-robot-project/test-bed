@@ -9,7 +9,8 @@ logger:
             '@id': PDP
             canID: 4
             voltagePerCurrentLinReg:
-                bufferSize: 100
+                bufferSize: 250
+                rSquaredThreshhold: 0.75
         - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             '@id': drive
             #Wheelbase: 2.16810362021
@@ -22,7 +23,8 @@ logger:
                     PDP:
                         org.usfirst.frc.team449.robot.jacksonWrappers.PDP: PDP
                     voltagePerCurrentLinReg:
-                        bufferSize: 100
+                        bufferSize: 250
+                        rSquaredThreshhold: 0.75
                     reverseOutput: true
                     reverseSensor: false
                     enableBrakeMode: true
@@ -59,7 +61,7 @@ logger:
                     updaterProcessPeriodSecs: 0.005
                     statusFrameRatesMillis: !!map
                         Status_4_AinTempVbat : 15
-                    slaves:
+                    slaveTalons:
                         - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
                             port: 2
                             inverted: true
@@ -89,7 +91,7 @@ logger:
                           kARev: 0.19604213688
                           kVRev: 0.62924298023
                           interceptVoltageRev: 0.8839750
-                    slaves:
+                    slaveTalons:
                         - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
                             port: 5
                             inverted: false
@@ -226,7 +228,7 @@ logger:
                 upshiftDebouncer:
                     '@id': upshiftDebouncer
                     bufferTimeSeconds: 0.06
-                upshiftFwdThresh: 0.3
+                upshiftFwdThresh: 0.4
 defaultCommands:
     - subsystem:
         org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:

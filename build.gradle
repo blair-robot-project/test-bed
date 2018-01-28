@@ -14,7 +14,7 @@ group 'org.usfirst.frc.team449.test-bed'
 version '1.0'
 
 def TEAM = 449
-def ROBOT_CLASS = "org.usfirst.frc.team449.robot.TestBed"
+def ROBOT_CLASS = "org.usfirst.frc.team449.robot.Robot"
 
 repositories {
     mavenCentral()
@@ -40,7 +40,7 @@ wpi {
 }
 
 dependencies {
-    compile group : 'com.github.blair-robot-project', name: '449-central-repo', version:'1b8f056a9f'
+    compile group : 'com.github.blair-robot-project', name: '449-central-repo', version:'478edecb31'
     compile wpilib()
     compile ctre()
     compile navx()
