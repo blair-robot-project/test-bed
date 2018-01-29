@@ -40,7 +40,7 @@ wpi {
 }
 
 dependencies {
-    compile group : 'com.github.blair-robot-project', name: '449-central-repo', version:'1a2bf7e6b5'
+    compile group : 'com.github.blair-robot-project', name: '449-central-repo', version:'d7cfc249f4'
     compile wpilib()
     compile ctre()
     compile navx()

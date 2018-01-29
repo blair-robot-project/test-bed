@@ -37,23 +37,27 @@ logger:
                     perGearSettings:
                         - &lowGear
                           gear: LOW
-                          kAFwd: 0.12919953323
-                          kVFwd: 1.32498443423
-                          interceptVoltageFwd: 0.797588
-                          kARev: 0.15941277553
-                          kVRev: 1.28936521731
-                          interceptVoltageRev: 0.7743393
+                          feedForwardComponent:
+                            org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+                              kAFwd: 0.12919953323
+                              kVFwd: 1.32498443423
+                              interceptVoltageFwd: 0.797588
+                              kARev: 0.15941277553
+                              kVRev: 1.28936521731
+                              interceptVoltageRev: 0.7743393
                           maxSpeed: 8.7
                           kP: 0.15
                           motionProfilePFwd: 0.5
                         - &highGear
                           gear: HIGH
-                          kAFwd: 0.19423682134
-                          kVFwd: 0.65106152446
-                          interceptVoltageFwd: 0.986742
-                          kARev: 0.20714931484
-                          kVRev: 0.63105309
-                          interceptVoltageRev: 0.894144
+                          feedForwardComponent:
+                            org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+                              kAFwd: 0.19423682134
+                              kVFwd: 0.65106152446
+                              interceptVoltageFwd: 0.986742
+                              kARev: 0.20714931484
+                              kVRev: 0.63105309
+                              interceptVoltageRev: 0.894144
                           maxSpeed: 15
                           kP: 0.3
                     minNumPointsInBottomBuffer: 10
@@ -77,19 +81,23 @@ logger:
                     reverseSensor: false
                     perGearSettings:
                         - <<: *lowGear
-                          kAFwd: 0.1131952403
-                          kVFwd: 1.32948238154
-                          interceptVoltageFwd: 0.793247
-                          kARev: 0.12721050276
-                          kVRev: 1.29887888885
-                          interceptVoltageRev: 0.7668543
+                          feedForwardComponent:
+                            org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+                              kAFwd: 0.1131952403
+                              kVFwd: 1.32948238154
+                              interceptVoltageFwd: 0.793247
+                              kARev: 0.12721050276
+                              kVRev: 1.29887888885
+                              interceptVoltageRev: 0.7668543
                         - <<: *highGear
-                          kAFwd: 0.19440692065
-                          kVFwd: 0.63537039069
-                          interceptVoltageFwd: 0.997928
-                          kARev: 0.19604213688
-                          kVRev: 0.62924298023
-                          interceptVoltageRev: 0.8839750
+                          feedForwardComponent:
+                            org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+                              kAFwd: 0.19440692065
+                              kVFwd: 0.63537039069
+                              interceptVoltageFwd: 0.997928
+                              kARev: 0.19604213688
+                              kVRev: 0.62924298023
+                              interceptVoltageRev: 0.8839750
                     slaveTalons:
                         - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
                             port: 5
@@ -251,18 +259,35 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
+    org.usfirst.frc.team449.robot.commands.general.SelectCommandFMSMessageBased:
         '@id': auto
-        subsystem:
-            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                drive
-        timeout: 10
-        profile:
-            '@id': profile
-            filename: "home/lvuser/449_resources/forward100InProfile.csv"
-            inverted: false
-            velocityOnly: false
-            resetPosition: true
+        commands:
+            "LLL" :
+                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
+                    '@id': LLL
+                    subsystem:
+                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                            drive
+                    timeout: 10
+                    profile:
+                        '@id': fwdProfile
+                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
+                        inverted: false
+                        velocityOnly: false
+                        resetPosition: true
+            "RRR" :
+                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
+                    '@id': RRR
+                    subsystem:
+                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                            drive
+                    timeout: 10
+                    profile:
+                        '@id': revProfile
+                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
+                        inverted: true
+                        velocityOnly: false
+                        resetPosition: true
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
