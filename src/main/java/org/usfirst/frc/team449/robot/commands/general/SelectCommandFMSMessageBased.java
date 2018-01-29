@@ -4,19 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.SelectCommand;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-/**
- * A Jackson-friendly wrapper on {@link SelectCommand}
- *
- * @param <T> The type of the key to the map.
- */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public abstract class SelectCommandWrapper<T> extends SelectCommand{
+public class SelectCommandFMSMessageBased extends SelectCommand<String>{
 
     /**
      * Creates a new SelectCommand with given map of selectors and m_commands.
@@ -26,7 +22,17 @@ public abstract class SelectCommandWrapper<T> extends SelectCommand{
      * @param commands The map of selectors to the command that should be run if they're chosen via selector().
      */
     @JsonCreator
-    public SelectCommandWrapper(@NotNull @JsonProperty(required = true) Map<T, Command> commands) {
+    public SelectCommandFMSMessageBased(@NotNull @JsonProperty(required = true) Map<String, Command> commands) {
         super(commands);
+    }
+
+    /**
+     * The Selector to determine which command should be run
+     *
+     * @return the key mapped to the command which should be run
+     */
+    @Override
+    protected String selector() {
+        return DriverStation.getInstance().getGameSpecificMessage();
     }
 }
