@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * A command that runs a command from a dictionary.
  */
-public abstract class SelectCommand<T> extends Command{
+public abstract class SelectCommand<T> extends Command {
 
     /**
      * The Commands to choose from.
@@ -18,17 +18,9 @@ public abstract class SelectCommand<T> extends Command{
      */
     private Command m_chosenCommand = null;
 
-    private void requireAll() {
-        for (T key : m_commands.keySet()){
-            for (Enumeration e = m_commands.get(key).getRequirements(); e.hasMoreElements(); ) {
-                requires((Subsystem) e.nextElement());
-            }
-        }
-    }
-
     /**
      * Creates a new SelectCommand with given map of selectors and m_commands.
-     *
+     * <p>
      * <p>Users of this constructor should also override selector().
      *
      * @param commands The map of selectors to the command that should be run if they're chosen via selector().
@@ -41,10 +33,10 @@ public abstract class SelectCommand<T> extends Command{
 
     /**
      * Creates a new SelectCommand with given map of selectors and m_commands.
-     *
+     * <p>
      * <p>Users of this constructor should also override selector().
      *
-     * @param name the name for this command group
+     * @param name     the name for this command group
      * @param commands The map of selectors to the command that should be run if they're chosen via selector().
      */
     public SelectCommand(String name, Map<T, Command> commands) {
@@ -52,6 +44,14 @@ public abstract class SelectCommand<T> extends Command{
         m_commands = commands;
 
         requireAll();
+    }
+
+    private void requireAll() {
+        for (T key : m_commands.keySet()) {
+            for (Enumeration e = m_commands.get(key).getRequirements(); e.hasMoreElements(); ) {
+                requires((Subsystem) e.nextElement());
+            }
+        }
     }
 
     /**

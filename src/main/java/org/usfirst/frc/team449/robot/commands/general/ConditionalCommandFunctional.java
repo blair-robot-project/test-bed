@@ -15,7 +15,7 @@ import java.util.function.BooleanSupplier;
  * A generic ConditionalCommand that takes a lambda for determining which command to run.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class ConditionalCommandFunctional extends ConditionalCommand{
+public class ConditionalCommandFunctional extends ConditionalCommand {
 
     /**
      * A method for determining which command to run.
@@ -26,8 +26,9 @@ public class ConditionalCommandFunctional extends ConditionalCommand{
     /**
      * Default constructor
      *
-     * @param onTrue  The Command to execute if BooleanSupplier returns true
-     * @param onFalse The Command to execute if BooleanSupplier returns false. Can be null to not execute a command if the supplier is false.
+     * @param onTrue          The Command to execute if BooleanSupplier returns true
+     * @param onFalse         The Command to execute if BooleanSupplier returns false. Can be null to not execute a
+     *                        command if the supplier is false.
      * @param booleanSupplier A method for determining which command to run.
      */
     @JsonCreator

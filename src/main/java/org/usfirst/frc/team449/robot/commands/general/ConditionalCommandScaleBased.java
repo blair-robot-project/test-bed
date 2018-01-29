@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * A ConditionalCommand that chooses which command to run based off of if the scale is on the left or the right.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class ConditionalCommandScaleBased extends ConditionalCommand{
+public class ConditionalCommandScaleBased extends ConditionalCommand {
 
     /**
      * Default constructor.

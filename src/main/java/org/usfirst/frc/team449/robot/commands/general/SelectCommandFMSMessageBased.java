@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class SelectCommandFMSMessageBased extends SelectCommand<String>{
+public class SelectCommandFMSMessageBased extends SelectCommand<String> {
 
     /**
      * Creates a new SelectCommand with given map of selectors and m_commands.

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * A ConditionalCommand that chooses which command to run based off of if the switch is on the left or the right.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class ConditionalCommandSwitchBased extends ConditionalCommand{
+public class ConditionalCommandSwitchBased extends ConditionalCommand {
 
     /**
      * Default constructor.

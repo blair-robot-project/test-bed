@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * A ConditionalCommand that chooses which command to run based off of alliance.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class ConditionalCommandAllianceBased extends ConditionalCommand{
+public class ConditionalCommandAllianceBased extends ConditionalCommand {
 
     /**
      * Default constructor.
