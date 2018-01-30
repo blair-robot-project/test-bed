@@ -259,35 +259,38 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.commands.general.SelectCommandFMSMessageBased:
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
         '@id': auto
-        commands:
-            "LLL" :
-                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
-                    '@id': LLL
-                    subsystem:
-                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                            drive
-                    timeout: 10
-                    profile:
-                        '@id': fwdProfile
-                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
-                        inverted: false
-                        velocityOnly: false
-                        resetPosition: true
-            "RRR" :
-                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
-                    '@id': RRR
-                    subsystem:
-                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                            drive
-                    timeout: 10
-                    profile:
-                        '@id': revProfile
-                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
-                        inverted: true
-                        velocityOnly: false
-                        resetPosition: true
+        commandList:
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': h̑̏̇ͯͭ͌̋ͫ̂̋͑̂̑ͫ̏̐̒͆͏̸̴̠̙͚̘͠e̷̻̗̬̯̲͕̲͈̰̖͓̣̲͈͚̲̗̽͒ͫ́̓ͧͥ́͊̓͋͠͠͡ͅC̵̸̝̤͍̘̣̞̮͂̿̇ͫ̇̊ͧ͛͢͡ͅͅo̶̪͎͎͎̜̠̤͙͕͍̿̔ͪͩ͒̂͆̇̿ͮ̇̂̅͑ͬ̓̇͑̄̕m̨̰͈̥̮̭̎̽ͭ̈̄̍͛͊̄̽̅ͧ̍͡e̸̡͓̙̬̼̻̯̭͙ͫ͑ͩ̄̂ͨ́̒̿̾̊ͨ͜s̶̷̱̟̘̼̝͎̙̭̠͈͙̮̑ͧ̓ͣͤ͆̊̋͡͠
+                subsystem:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                        drive
+                pathRequester:
+                    '@id': pathRequester
+                    address: "tcp://10.4.49.2:5800"
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
+                        poseEstimator
+                x: 10
+                y: 0
+                theta: 0
+                deltaTime: 0.02
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': secondGoToPos
+                subsystem:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                        drive
+                pathRequester:
+                    pathRequester
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
+                        poseEstimator
+                x: 15
+                y: 5
+                theta: 90
+                deltaTime: 0.02
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
