@@ -116,6 +116,16 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
     }
 
     /**
+     * Check if the mechanism has reached the setpoint.
+     *
+     * @return True if the setpoint has been reached, false otherwise.
+     */
+    @Override
+    public boolean onTarget() {
+        return talon.MPIsFinished();
+    }
+
+    /**
      * Enable the motors of this subsystem.
      */
     @Override
