@@ -149,7 +149,15 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
         //Update acceleration
         accel = talon.getVelocity() - lastVel;
         lastVel = talon.getVelocity();
+    }
 
+    /**
+     * When the run method of the scheduler is called this method will be called.
+     *
+     * Starts running the Talon profile if it's ready.
+     */
+    @Override
+    public void periodic(){
         //Start the profile if it's ready
         if (!startedProfile && talon.readyForMP()){
             talon.startRunningMP();
