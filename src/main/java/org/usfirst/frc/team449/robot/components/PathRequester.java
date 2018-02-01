@@ -12,6 +12,8 @@ import org.zeromq.ZMQ;
 import proto.PathOuterClass;
 import proto.PathRequestOuterClass;
 
+import java.util.Arrays;
+
 /**
  * The object that requests a motion profile from the Jetson.
  */
@@ -90,7 +92,7 @@ public class PathRequester {
 
         try {
             //Read the response
-            path = path.getParserForType().parseFrom(output);
+            path = PathOuterClass.Path.parseFrom(output);
             leftMotionProfileData = new MotionProfileData(path.getPosLeftList(), path.getVelLeftList(),
                     path.getAccelLeftList(), path.getDeltaTime(), inverted, false, resetPosition);
             if (path.getPosRightCount() != 0) {

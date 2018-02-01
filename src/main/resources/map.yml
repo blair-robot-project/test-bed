@@ -263,7 +263,7 @@ autoStartupCommand:
         '@id': auto
         commandList:
             - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
-                '@id': h̑̏̇ͯͭ͌̋ͫ̂̋͑̂̑ͫ̏̐̒͆͏̸̴̠̙͚̘͠e̷̻̗̬̯̲͕̲͈̰̖͓̣̲͈͚̲̗̽͒ͫ́̓ͧͥ́͊̓͋͠͠͡ͅC̵̸̝̤͍̘̣̞̮͂̿̇ͫ̇̊ͧ͛͢͡ͅͅo̶̪͎͎͎̜̠̤͙͕͍̿̔ͪͩ͒̂͆̇̿ͮ̇̂̅͑ͬ̓̇͑̄̕m̨̰͈̥̮̭̎̽ͭ̈̄̍͛͊̄̽̅ͧ̍͡e̸̡͓̙̬̼̻̯̭͙ͫ͑ͩ̄̂ͨ́̒̿̾̊ͨ͜s̶̷̱̟̘̼̝͎̙̭̠͈͙̮̑ͧ̓ͣͤ͆̊̋͡͠
+                '@id': firstGoToPos
                 subsystem:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive

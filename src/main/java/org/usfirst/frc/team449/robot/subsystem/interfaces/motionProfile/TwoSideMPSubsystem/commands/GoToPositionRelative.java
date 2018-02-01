@@ -36,7 +36,7 @@ public class GoToPositionRelative<T extends Subsystem & SubsystemMPTwoSides> ext
     public GoToPositionRelative(@NotNull @JsonProperty(required = true) GetPathFromJetson getPath,
                                 @NotNull @JsonProperty(required = true) T subsystem) {
         this.getPath = getPath;
-        addSequential(getPath);
+        addSequential(this.getPath);
         addSequential(new RunProfileTwoSides<>(subsystem, this::getLeft,
                 this::getRight, 10));
     }
