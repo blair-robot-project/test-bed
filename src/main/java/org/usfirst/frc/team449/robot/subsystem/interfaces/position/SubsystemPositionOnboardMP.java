@@ -9,12 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import org.usfirst.frc.team449.robot.components.PathGenerator;
 import org.usfirst.frc.team449.robot.generalInterfaces.updatable.Updatable;
 import org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon;
+import org.usfirst.frc.team449.robot.other.MotionProfileData;
+import org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.SubsystemMP;
 
 /**
  * A SubsystemPosition that moves using motion profiles.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPosition, Updatable{
+public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPosition, Updatable, SubsystemMP{
 
     /**
      * The Talon SRX this subsystem controls.
@@ -73,7 +75,7 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
     @Override
     public void setPositionSetpoint(double feet) {
         disableMotor();
-        talon.loadProfile(pathGenerator.generateProfile(talon.getPositionFeet(), talon.getVelocity(), accel, feet));
+        loadMotionProfile(pathGenerator.generateProfile(talon.getPositionFeet(), talon.getVelocity(), accel, feet));
         startedProfile = false;
     }
 
@@ -122,7 +124,7 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
      */
     @Override
     public boolean onTarget() {
-        return talon.MPIsFinished();
+        return profileFinished();
     }
 
     /**
@@ -159,9 +161,63 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
     @Override
     public void periodic(){
         //Start the profile if it's ready
-        if (!startedProfile && talon.readyForMP()){
+        if (!startedProfile && readyToRunProfile()){
             talon.startRunningMP();
             startedProfile = true;
         }
+    }
+
+    /**
+     * Loads a profile into the MP buffer.
+     *
+     * @param profile The profile to be loaded.
+     */
+    @Override
+    public void loadMotionProfile(@NotNull MotionProfileData profile) {
+        talon.loadProfile(profile);
+    }
+
+    /**
+     * Start running the profile that's currently loaded into the MP buffer.
+     */
+    @Override
+    public void startRunningLoadedProfile() {
+        talon.startRunningMP();
+    }
+
+    /**
+     * Get whether this subsystem has finished running the profile loaded in it.
+     *
+     * @return true if there's no profile loaded and no profile running, false otherwise.
+     */
+    @Override
+    public boolean profileFinished() {
+        return talon.MPIsFinished();
+    }
+
+    /**
+     * Disable the motors.
+     */
+    @Override
+    public void disable() {
+        disableMotor();
+    }
+
+    /**
+     * Hold the current position.
+     */
+    @Override
+    public void holdPosition() {
+        talon.holdPositionMP();
+    }
+
+    /**
+     * Get whether the subsystem is ready to run the loaded profile.
+     *
+     * @return true if a profile is loaded and ready to run, false otherwise.
+     */
+    @Override
+    public boolean readyToRunProfile() {
+        return talon.readyForMP();
     }
 }
