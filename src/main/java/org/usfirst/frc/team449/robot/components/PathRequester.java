@@ -68,7 +68,9 @@ public class PathRequester {
         pathRequest.setY(y);
         pathRequest.setTheta(Math.toRadians(theta));
         pathRequest.setDt((int) (deltaTime * 1000)); //Convert to milliseconds
+        System.out.println("Start send");
         socket.send(pathRequest.build().toByteArray());
+        System.out.println("Finished send");
     }
 
     /**
