@@ -21,7 +21,7 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
     /**
      * The Talon SRX this subsystem controls.
      */
-    private final FPSTalon talon;
+    protected final FPSTalon talon;
 
     /**
      * The object for generating the paths for the Talon to run.
@@ -41,7 +41,7 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
     /**
      * Whether or not the profile loaded into the Talon has been started.
      */
-    private boolean startedProfile;
+    protected boolean startedProfile;
 
     /**
      * Default constructor.
