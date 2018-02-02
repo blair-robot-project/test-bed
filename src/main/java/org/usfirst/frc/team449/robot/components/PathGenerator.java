@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.usfirst.frc.team449.robot.other.MotionProfileData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +19,10 @@ import java.util.List;
 public class PathGenerator {
 
     /**
-     * The parameters for the motion profile.
+     * The parameters for the motion profile going forwards and backwards, respectively.
      */
     @NotNull
-    private final MotionProfileConstraints settings;
+    private final MotionProfileConstraints fwdSettings, revSettings;
 
     /**
      * The amount of time between each point, in seconds.
@@ -34,44 +35,61 @@ public class PathGenerator {
     private MotionProfile generatedProfile;
 
     /**
-     * The current point being loaded from 254's profile into a {@link MotionProfileData}. Field to avoid garbage collection.
+     * The current point being loaded from 254's profile into a {@link MotionProfileData}. Field to avoid garbage
+     * collection.
      */
     private MotionState motionState;
 
     /**
      * The list of positions, velocities, and accelerations in the profile. Field to avoid garbage collection.
      */
-    private List<Double> pos,  vel,  accel;
+    private List<Double> pos, vel, accel;
 
     /**
      * Default constructor.
      *
-     * @param maxVel The maximum velocity for the profile to reach, in feet/sec.
-     * @param maxAccel The maximum acceleration for the profile to reach, in feet/(sec^2)
-     * @param deltaTimeSecs The amount of time between each point, in seconds. Defaults to .02 seconds, or 20 milliseconds.
+     * @param fwdMaxVel     The maximum speed for the profile to reach going forwards, in feet/sec.
+     * @param revMaxVel     The maximum speed (not velocity, this should be positive) for the profile to reach going in
+     *                      reverse, in feet/sec. Defaults to fwdMaxVel.
+     * @param maxAccel      The maximum acceleration for the profile to reach, in feet/(sec^2)
+     * @param deltaTimeSecs The amount of time between each point, in seconds. Defaults to .02 seconds, or 20
+     *                      milliseconds.
      */
     @JsonCreator
-    public PathGenerator(@JsonProperty(required = true) double maxVel,
+    public PathGenerator(@JsonProperty(required = true) double fwdMaxVel,
+                         @Nullable Double revMaxVel,
                          @JsonProperty(required = true) double maxAccel,
-                         @Nullable Double deltaTimeSecs){
-        this.settings = new MotionProfileConstraints(maxVel, maxAccel);
+                         @Nullable Double deltaTimeSecs) {
+        this.fwdSettings = new MotionProfileConstraints(fwdMaxVel, maxAccel);
+        this.revSettings = new MotionProfileConstraints(revMaxVel != null ? revMaxVel : fwdMaxVel, maxAccel);
         this.deltaTimeSecs = deltaTimeSecs != null ? deltaTimeSecs : 0.02;
     }
 
     /**
      * Generate a profile given the current state and desired end state.
      *
-     * @param currentPos The current position in feet.
-     * @param currentVel The current velocity in feet/sec.
-     * @param currentAccel The current acceleration in feet/(sec^2).
+     * @param currentPos     The current position in feet.
+     * @param currentVel     The current velocity in feet/sec.
+     * @param currentAccel   The current acceleration in feet/(sec^2).
      * @param destinationPos The desired position in feet.
      * @return A motion profile that will move from the current state to the destination.
      */
-    public MotionProfileData generateProfile(double currentPos, double currentVel, double currentAccel, double destinationPos){
-        generatedProfile = MotionProfileGenerator.generateProfile(settings,
-                new MotionProfileGoal(Math.abs(destinationPos-currentPos)), new MotionState(0,0, currentVel, currentAccel));
+    public MotionProfileData generateProfile(double currentPos, double currentVel, double currentAccel, double destinationPos) {
+        if (currentPos > destinationPos){
+            generatedProfile = MotionProfileGenerator.generateProfile(revSettings,
+                    new MotionProfileGoal(currentPos - destinationPos),
+                    new MotionState(0, 0, currentVel, currentAccel));
+        } else {
+            generatedProfile = MotionProfileGenerator.generateProfile(fwdSettings,
+                    new MotionProfileGoal(destinationPos - currentPos),
+                    new MotionState(0, 0, currentVel, currentAccel));
+        }
 
-        for (double t = 0; t < generatedProfile.endTime(); t += deltaTimeSecs){
+        this.pos = new ArrayList<>();
+        this.vel = new ArrayList<>();
+        this.accel = new ArrayList<>();
+
+        for (double t = 0; t < generatedProfile.endTime(); t += deltaTimeSecs) {
             motionState = generatedProfile.stateByTimeClamped(t);
             pos.add(motionState.pos());
             vel.add(motionState.vel());
