@@ -56,6 +56,8 @@ public class GetPathFromJetson extends Command implements PoseCommand {
     @Nullable
     private MotionProfileData[] motionProfileData;
 
+    private final double maxVel, maxAccel, maxJerk;
+
     /**
      * Default constructor.
      *
@@ -75,6 +77,9 @@ public class GetPathFromJetson extends Command implements PoseCommand {
                              @Nullable Double y,
                              @Nullable Double theta,
                              @JsonProperty(required = true) double deltaTime,
+                             @JsonProperty(required = true) double maxVel,
+                             @JsonProperty(required = true) double maxAccel,
+                             @JsonProperty(required = true) double maxJerk,
                              boolean resetPosition) {
         this.pathRequester = pathRequester;
         this.x = x;
@@ -82,6 +87,9 @@ public class GetPathFromJetson extends Command implements PoseCommand {
         this.theta = theta;
         this.deltaTime = deltaTime;
         this.resetPosition = resetPosition;
+        this.maxVel = maxVel;
+        this.maxAccel = maxAccel;
+        this.maxJerk = maxJerk;
     }
 
     /**
@@ -92,12 +100,12 @@ public class GetPathFromJetson extends Command implements PoseCommand {
         Logger.addEvent("GetPathFromJetson init", this.getClass());
         if (x != null) {
             inverted = x < 0;
-            pathRequester.requestPath(Math.abs(x), y, (inverted ? -1 : 1) * theta, deltaTime);
+            pathRequester.requestPath(Math.abs(x), y, (inverted ? -1 : 1) * theta, deltaTime, maxVel, maxAccel, maxJerk);
         } else {
             //Store getAsDouble in x so it doesn't change between checking inversion and requesting the path
             x = xSupplier.getAsDouble();
             inverted = x < 0;
-            pathRequester.requestPath(Math.abs(x), ySupplier.getAsDouble(), (inverted ? -1 : 1) * thetaSupplier.getAsDouble(), deltaTime);
+            pathRequester.requestPath(Math.abs(x), ySupplier.getAsDouble(), (inverted ? -1 : 1) * thetaSupplier.getAsDouble(), deltaTime, maxVel, maxAccel, maxJerk);
         }
         motionProfileData = null;
     }

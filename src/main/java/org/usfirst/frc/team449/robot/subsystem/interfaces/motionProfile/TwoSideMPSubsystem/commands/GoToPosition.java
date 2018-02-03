@@ -66,6 +66,9 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
                         @Nullable Double x,
                         @Nullable Double y,
                         @Nullable Double theta,
+                        @JsonProperty(required = true) double maxVel,
+                        @JsonProperty(required = true) double maxAccel,
+                        @JsonProperty(required = true) double maxJerk,
                         @JsonProperty(required = true) double deltaTime) {
         this.x = x;
         this.y = y;
@@ -73,7 +76,7 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
         this.poseEstimator = poseEstimator;
         this.subsystem = subsystem;
         GetPathFromJetson getPath = new GetPathFromJetson(pathRequester, null, null,
-                null, deltaTime,  false);
+                null, deltaTime,  maxVel, maxAccel, maxJerk, false);
         GoToPositionRelative goToPositionRelative = new GoToPositionRelative<>(getPath, subsystem);
         goToPositionRelative.setDestination(this::getX, this::getY, this::getTheta);
         addSequential(goToPositionRelative);

@@ -61,13 +61,21 @@ public class PathRequester {
      * @param theta     The angular displacement, in degrees.
      * @param deltaTime The time between setpoints in the profile, in seconds.
      */
-    public void requestPath(double x, double y, double theta, double deltaTime) {
+    public void requestPath(double x, double y, double theta, double deltaTime, double maxVel, double maxAccel, double maxJerk) {
         //Send the request
         pathRequest = PathRequestOuterClass.PathRequest.newBuilder();
         pathRequest.setX(x);
         pathRequest.setY(y);
         pathRequest.setTheta(Math.toRadians(theta));
         pathRequest.setDt((int) (deltaTime * 1000)); //Convert to milliseconds
+        pathRequest.setMaxVel(maxVel);
+        pathRequest.setMaxAccel(maxAccel);
+        pathRequest.setMaxJerk(maxJerk);
+        System.out.println("X: "+pathRequest.getX());
+        System.out.println("Y: "+pathRequest.getY());
+        System.out.println("Theta: "+pathRequest.getTheta());
+        System.out.println("Max accel: "+pathRequest.getMaxAccel());
+        System.out.println("Delta time: "+pathRequest.getDt());
         System.out.println("Start send");
         socket.send(pathRequest.build().toByteArray());
         System.out.println("Finished send");
@@ -95,6 +103,8 @@ public class PathRequester {
         try {
             //Read the response
             path = PathOuterClass.Path.parseFrom(output);
+            System.out.println("Left length: "+path.getPosLeftCount());
+            System.out.println("Right length: "+path.getPosRightCount());
             leftMotionProfileData = new MotionProfileData(path.getPosLeftList(), path.getVelLeftList(),
                     path.getAccelLeftList(), path.getDeltaTime(), inverted, false, resetPosition);
             if (path.getPosRightCount() != 0) {

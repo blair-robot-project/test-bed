@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.usfirst.frc.team449.robot.commands.general.PrintProfile;
 import org.usfirst.frc.team449.robot.generalInterfaces.poseCommand.PoseCommand;
 import org.usfirst.frc.team449.robot.other.MotionProfileData;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.SubsystemMPTwoSides;
@@ -39,6 +40,7 @@ public class GoToPositionRelative<T extends Subsystem & SubsystemMPTwoSides> ext
         addSequential(this.getPath);
         addSequential(new RunProfileTwoSides<>(subsystem, this::getLeft,
                 this::getRight, 10));
+        addSequential(new PrintProfile(this::getLeft, this::getRight));
     }
 
     /**
