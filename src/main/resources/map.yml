@@ -256,48 +256,20 @@ buttons:
                         drive
         action: WHEN_PRESSED
 autoStartupCommand: #right start, left switch
-    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+    org.usfirst.frc.team449.robot.commands.general.GoToPositionSequence:
         '@id': simpleSwitchStartRightLeftSwitch
-        commandList:
-            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
-                '@id': rightPlatformZone
-                poseEstimator:
-                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
-                        poseEstimator
-                pathRequester:
-                    org.usfirst.frc.team449.robot.components.PathRequester:
-                        '@id': autoPath
-                        # This is Unchecked, just a place holder
-                        address: "2"
-                x: 19
-                y: 4
-                theta: 90
-                deltaTime: .05
-            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
-                '@id': leftPlatformZone
-                poseEstimator:
-                    org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
-                        poseEstimator
-                pathRequester:
-                    org.usfirst.frc.team449.robot.components.PathRequester:
-                        '@id': autoPath
-                        # This is Unchecked, just a place holder
-                        address: "2"
-                x: 19
-                y: 23
-                theta: -180
-                deltaTime: .05
-            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
-                '@id': leftSwitch
-                poseEstimator:
-                   org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
-                      poseEstimator
-                pathRequester:
-                   org.usfirst.frc.team449.robot.components.PathRequester:
-                      '@id': autoPath
-                      # This is Unchecked, just a place holder
-                      address: "2"
-                x: 14
-                y: 23
-                theta: -90
-                deltaTime: .05
+        poseEstimator:
+           org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                poseEstimator
+        pathRequester:
+           org.usfirst.frc.team449.robot.components.PathRequester:
+                '@id': autoPath
+                address: "UNCHECKED"
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        deltaTime: .05
+        path:
+            - {0, 0, 0}
+            - {0, 0, 0}
+            - {0, 0, 0}
