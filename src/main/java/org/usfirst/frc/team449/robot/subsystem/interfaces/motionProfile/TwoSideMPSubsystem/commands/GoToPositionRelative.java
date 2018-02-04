@@ -40,7 +40,7 @@ public class GoToPositionRelative<T extends Subsystem & SubsystemMPTwoSides> ext
         addSequential(this.getPath);
         addSequential(new RunProfileTwoSides<>(subsystem, this::getLeft,
                 this::getRight, 10));
-        addSequential(new PrintProfile(this::getLeft, this::getRight));
+//        addSequential(new PrintProfile(this::getLeft, this::getRight));
     }
 
     /**

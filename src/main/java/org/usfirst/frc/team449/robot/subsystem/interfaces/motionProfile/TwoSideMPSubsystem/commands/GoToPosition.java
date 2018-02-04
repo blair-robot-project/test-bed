@@ -86,7 +86,7 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
      * @return The relative X distance to the setpoint, in feet.
      */
     private double getX() {
-        if (x != null) {
+        if (xSupplier == null) {
             return x - poseEstimator.getPos()[0];
         } else {
             return xSupplier.getAsDouble() - poseEstimator.getPos()[0];
@@ -97,7 +97,7 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
      * @return The relative Y distance to the setpoint, in feet.
      */
     private double getY() {
-        if (y != null) {
+        if (ySupplier == null) {
             return y - poseEstimator.getPos()[1];
         } else {
             return ySupplier.getAsDouble() - poseEstimator.getPos()[1];
@@ -108,7 +108,7 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
      * @return The relative angular distance to the setpoint, in degrees.
      */
     private double getTheta() {
-        if (theta != null) {
+        if (thetaSupplier == null) {
             return theta - subsystem.getHeading();
         } else {
             return thetaSupplier.getAsDouble() - subsystem.getHeading();
@@ -127,6 +127,9 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
         this.x = x;
         this.y = y;
         this.theta = theta;
+        this.xSupplier = null;
+        this.ySupplier = null;
+        this.thetaSupplier = null;
     }
 
     /**

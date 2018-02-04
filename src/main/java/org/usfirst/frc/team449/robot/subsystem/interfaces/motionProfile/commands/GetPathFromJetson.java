@@ -98,7 +98,7 @@ public class GetPathFromJetson extends Command implements PoseCommand {
     @Override
     protected void initialize() {
         Logger.addEvent("GetPathFromJetson init", this.getClass());
-        if (x != null) {
+        if (xSupplier == null) {
             inverted = x < 0;
             pathRequester.requestPath(Math.abs(x), y, (inverted ? -1 : 1) * theta, deltaTime, maxVel, maxAccel, maxJerk);
         } else {
@@ -149,6 +149,9 @@ public class GetPathFromJetson extends Command implements PoseCommand {
      */
     @Nullable
     public MotionProfileData[] getMotionProfileData() {
+        if (inverted && motionProfileData.length == 2){
+            return new MotionProfileData[]{motionProfileData[1], motionProfileData[0]};
+        }
         return motionProfileData;
     }
 
@@ -164,6 +167,9 @@ public class GetPathFromJetson extends Command implements PoseCommand {
         this.x = x;
         this.y = y;
         this.theta = theta;
+        this.xSupplier = null;
+        this.ySupplier = null;
+        this.thetaSupplier = null;
     }
 
     /**
