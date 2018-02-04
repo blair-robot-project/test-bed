@@ -83,8 +83,8 @@ logger:
                             rightMaster
                     piston:
                         '@id': driveShifter
-                        forward: 4
-                        reverse: 5
+                        forward: 0
+                        reverse: 1
                     startingGear: LOW
         - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
             '@id': oi
@@ -252,3 +252,10 @@ buttons:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
         action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+                '@id': intakeButton
+                joystick:
+                    org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                        driverGamepad
+                buttonNumber: 1
