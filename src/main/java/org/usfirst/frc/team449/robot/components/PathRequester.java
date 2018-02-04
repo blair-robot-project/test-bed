@@ -105,6 +105,7 @@ public class PathRequester {
             path = PathOuterClass.Path.parseFrom(output);
             System.out.println("Left length: "+path.getPosLeftCount());
             System.out.println("Right length: "+path.getPosRightCount());
+            System.out.println("Delta time: "+path.getDeltaTime());
             leftMotionProfileData = new MotionProfileData(path.getPosLeftList(), path.getVelLeftList(),
                     path.getAccelLeftList(), path.getDeltaTime(), inverted, false, resetPosition);
             if (path.getPosRightCount() != 0) {

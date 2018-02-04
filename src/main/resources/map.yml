@@ -47,7 +47,7 @@ logger:
                               interceptVoltageRev: 0.7743393
                           maxSpeed: 8.7
                           kP: 0.15
-#                          motionProfilePFwd: 0.5
+                          motionProfilePFwd: 0.5
                         - &highGear
                           gear: HIGH
                           feedForwardComponent:

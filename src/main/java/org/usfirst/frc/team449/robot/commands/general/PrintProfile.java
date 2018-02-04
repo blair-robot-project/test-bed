@@ -1,7 +1,5 @@
 package org.usfirst.frc.team449.robot.commands.general;
 
-import com.team254.lib.util.motion.MotionProfile;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import org.usfirst.frc.team449.robot.other.MotionProfileData;
 
