@@ -1,4 +1,4 @@
-package org.usfirst.frc.team449.robot.subsystem.interfaces.compex.elevator;
+package org.usfirst.frc.team449.robot.subsystem.complex.elevator;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
