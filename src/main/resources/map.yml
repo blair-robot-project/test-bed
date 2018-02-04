@@ -259,35 +259,63 @@ teleopStartupCommand:
             org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
                 pneumatics
 autoStartupCommand:
-    org.usfirst.frc.team449.robot.commands.general.SelectCommandFMSMessageBased:
+    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
         '@id': auto
-        commands:
-            "LLL" :
-                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
-                    '@id': LLL
-                    subsystem:
-                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                            drive
-                    timeout: 10
-                    profile:
-                        '@id': fwdProfile
-                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
-                        inverted: false
-                        velocityOnly: false
-                        resetPosition: true
-            "RRR" :
-                org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.RunProfile:
-                    '@id': RRR
-                    subsystem:
-                        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
-                            drive
-                    timeout: 10
-                    profile:
-                        '@id': revProfile
-                        filename: "home/lvuser/449_resources/forward100InProfile.csv"
-                        inverted: true
-                        velocityOnly: false
-                        resetPosition: true
+        commandList:
+#            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPositionRelative:
+#                '@id': gtpr
+#                getPath:
+#                    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.GetPathFromJetson:
+#                        '@id': getPath
+#                        pathRequester:
+#                            '@id': pathRequester
+#                            address: "tcp://10.4.49.2:5800"
+#                        x: 10
+#                        y: 0
+#                        theta: 0
+#                        maxVel: 7
+#                        maxAccel: 12
+#                        maxJerk: 16
+#                        deltaTime: 0.02
+#                        resetPosition: true
+#                subsystem:
+#                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+#                        drive
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': firstGoToPos
+                subsystem:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                        drive
+                pathRequester:
+                    '@id': pathRequester
+                    address: "tcp://10.4.49.2:5800"
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
+                        poseEstimator
+                x: 10
+                y: 0
+                theta: 0
+                maxVel: 7
+                maxAccel: 12
+                maxJerk: 16
+                deltaTime: 0.02
+            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+                '@id': secondGoToPos
+                subsystem:
+                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                        drive
+                pathRequester:
+                    pathRequester
+                poseEstimator:
+                    org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
+                        poseEstimator
+                x: 15
+                y: 5
+                theta: 90
+                maxVel: 5
+                maxAccel: 8
+                maxJerk: 16
+                deltaTime: 0.02
 updater:
     org.usfirst.frc.team449.robot.other.Updater:
         '@id': updater
