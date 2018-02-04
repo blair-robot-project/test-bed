@@ -69,6 +69,9 @@ public class GetPathFromJetson extends Command implements PoseCommand {
      * @param theta         The angle, in degrees, for the robot to turn to while travelling. Can be null to set pose
      *                      using setters.
      * @param deltaTime     The time between setpoints in the profile, in seconds.
+     * @param maxVel The maximum velocity, in units/second.
+     * @param maxAccel The maximum acceleration, in units/(second^2)
+     * @param maxJerk The maximum jerk, in units/(second^3)
      * @param resetPosition Whether or not to reset the encoder position before running the profile.
      */
     @JsonCreator

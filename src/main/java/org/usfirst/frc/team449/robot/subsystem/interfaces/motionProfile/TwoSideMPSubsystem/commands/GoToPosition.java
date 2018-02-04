@@ -57,6 +57,9 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
      *                      setters.
      * @param theta         The absolute angle, in degrees, for the robot to go to. Can be null to set pose using
      *                      setters.
+     * @param maxVel The maximum velocity, in units/second.
+     * @param maxAccel The maximum acceleration, in units/(second^2)
+     * @param maxJerk The maximum jerk, in units/(second^3)
      * @param deltaTime     The time between setpoints in the profile, in seconds.
      */
     @JsonCreator

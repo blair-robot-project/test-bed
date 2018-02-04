@@ -60,6 +60,9 @@ public class PathRequester {
      * @param y         The y displacement, in any unit.
      * @param theta     The angular displacement, in degrees.
      * @param deltaTime The time between setpoints in the profile, in seconds.
+     * @param maxVel The maximum velocity, in units/second.
+     * @param maxAccel The maximum acceleration, in units/(second^2)
+     * @param maxJerk The maximum jerk, in units/(second^3)
      */
     public void requestPath(double x, double y, double theta, double deltaTime, double maxVel, double maxAccel, double maxJerk) {
         //Send the request
