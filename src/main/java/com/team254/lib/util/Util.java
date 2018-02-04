@@ -6,7 +6,9 @@ import java.util.List;
  * Contains basic functions that are used often.
  */
 public class Util {
-    /** Prevent this class from being instantiated. */
+    /**
+     * Prevent this class from being instantiated.
+     */
     private Util() {
     }
 

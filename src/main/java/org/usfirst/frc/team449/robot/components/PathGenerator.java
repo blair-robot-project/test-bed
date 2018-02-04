@@ -75,7 +75,7 @@ public class PathGenerator {
      * @return A motion profile that will move from the current state to the destination.
      */
     public MotionProfileData generateProfile(double currentPos, double currentVel, double currentAccel, double destinationPos) {
-        if (currentPos > destinationPos){
+        if (currentPos > destinationPos) {
             generatedProfile = MotionProfileGenerator.generateProfile(revSettings,
                     new MotionProfileGoal(currentPos - destinationPos),
                     new MotionState(0, 0, currentVel, currentAccel));

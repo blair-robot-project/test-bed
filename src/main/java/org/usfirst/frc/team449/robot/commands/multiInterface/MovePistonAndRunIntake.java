@@ -16,7 +16,7 @@ import org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SubsystemSole
  * Move the intake piston and change the intake state.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class MovePistonAndRunIntake<T extends Subsystem & SubsystemIntake & SubsystemSolenoid> extends InstantCommand{
+public class MovePistonAndRunIntake<T extends Subsystem & SubsystemIntake & SubsystemSolenoid> extends InstantCommand {
 
     /**
      * The subsystem to execute this command on.
@@ -39,7 +39,9 @@ public class MovePistonAndRunIntake<T extends Subsystem & SubsystemIntake & Subs
     /**
      * Default constructor
      *
-     * @param subsystem The subsystem to execute this command on.
+     * @param subsystem  The subsystem to execute this command on.
+     * @param pistonPos  The position to set the piston to.
+     * @param intakeMode The mode to set the intake to.
      */
     @JsonCreator
     public MovePistonAndRunIntake(@NotNull @JsonProperty(required = true) T subsystem,

@@ -12,6 +12,13 @@ public class HeadingProfileFollower extends ProfileFollower {
         super(kp, ki, kv, kffv, kffa);
     }
 
+    /**
+     * Convert a motion state representing an angle to a properly wrapped angle.
+     */
+    public static MotionState canonicalize(MotionState state) {
+        return new MotionState(state.t(), Rotation2d.fromDegrees(state.pos()).getDegrees(), state.vel(), state.acc());
+    }
+
     @Override
     public double update(MotionState latest_state, double t) {
         final Rotation2d goal_rotation_inverse = Rotation2d.fromDegrees(mGoal.pos()).inverse();
@@ -32,12 +39,5 @@ public class HeadingProfileFollower extends ProfileFollower {
             super.resetIntegral();
         }
         return result;
-    }
-
-    /**
-     * Convert a motion state representing an angle to a properly wrapped angle.
-     */
-    public static MotionState canonicalize(MotionState state) {
-        return new MotionState(state.t(), Rotation2d.fromDegrees(state.pos()).getDegrees(), state.vel(), state.acc());
     }
 }

@@ -6,30 +6,15 @@ import java.util.Optional;
  * A SetpointGenerate does just-in-time motion profile generation to supply a stream of setpoints that obey the given
  * constraints to a controller. The profile is regenerated when any of the inputs change, but is cached (and trimmed as
  * we go) if the only update is to the current state.
- * 
+ * <p>
  * Note that typically for smooth control, a user will feed the last iteration's setpoint as the argument to
  * getSetpoint(), and should only use a measured state directly on the first iteration or if a large disturbance is
  * detected.
  */
 public class SetpointGenerator {
-    /**
-     * A Setpoint is just a MotionState and an additional flag indicating whether this is setpoint achieves the goal
-     * (useful for higher-level logic to know that it is now time to do something else).
-     */
-    public static class Setpoint {
-        public MotionState motion_state;
-        public boolean final_setpoint;
-
-        public Setpoint(MotionState motion_state, boolean final_setpoint) {
-            this.motion_state = motion_state;
-            this.final_setpoint = final_setpoint;
-        }
-    }
-
     protected MotionProfile mProfile = null;
     protected MotionProfileGoal mGoal = null;
     protected MotionProfileConstraints mConstraints = null;
-
     public SetpointGenerator() {
     }
 
@@ -44,20 +29,16 @@ public class SetpointGenerator {
 
     /**
      * Get a new Setpoint (and generate a new MotionProfile if necessary).
-     * 
-     * @param constraints
-     *            The constraints to use.
-     * @param goal
-     *            The goal to use.
-     * @param prev_state
-     *            The previous setpoint (or measured state of the system to do a reset).
-     * @param t
-     *            The time to generate a setpoint for.
+     *
+     * @param constraints The constraints to use.
+     * @param goal        The goal to use.
+     * @param prev_state  The previous setpoint (or measured state of the system to do a reset).
+     * @param t           The time to generate a setpoint for.
      * @return The new Setpoint at time t.
      */
     public synchronized Setpoint getSetpoint(MotionProfileConstraints constraints, MotionProfileGoal goal,
-            MotionState prev_state,
-            double t) {
+                                             MotionState prev_state,
+                                             double t) {
         boolean regenerate = mConstraints == null || !mConstraints.equals(constraints) || mGoal == null
                 || !mGoal.equals(goal) || mProfile == null;
         if (!regenerate && !mProfile.isEmpty()) {
@@ -105,10 +86,24 @@ public class SetpointGenerator {
 
     /**
      * Get the full profile from the latest call to getSetpoint(). Useful to check estimated time or distance to goal.
-     * 
+     *
      * @return The profile from the latest call to getSetpoint(), or null if there is not yet a profile.
      */
     public MotionProfile getProfile() {
         return mProfile;
+    }
+
+    /**
+     * A Setpoint is just a MotionState and an additional flag indicating whether this is setpoint achieves the goal
+     * (useful for higher-level logic to know that it is now time to do something else).
+     */
+    public static class Setpoint {
+        public MotionState motion_state;
+        public boolean final_setpoint;
+
+        public Setpoint(MotionState motion_state, boolean final_setpoint) {
+            this.motion_state = motion_state;
+            this.final_setpoint = final_setpoint;
+        }
     }
 }

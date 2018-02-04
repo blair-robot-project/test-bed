@@ -16,7 +16,7 @@ import org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.Subsyste
  * A SubsystemPosition that moves using motion profiles.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPosition, Updatable, SubsystemMP{
+public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPosition, Updatable, SubsystemMP {
 
     /**
      * The Talon SRX this subsystem controls.
@@ -27,31 +27,28 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
      * The object for generating the paths for the Talon to run.
      */
     private final PathGenerator pathGenerator;
-
+    /**
+     * Whether or not the profile loaded into the Talon has been started.
+     */
+    protected boolean startedProfile;
     /**
      * The previously observed Talon velocity. Used for calculating acceleration.
      */
     private double lastVel;
-
     /**
      * The acceleration of the Talon.
      */
     private double accel;
 
     /**
-     * Whether or not the profile loaded into the Talon has been started.
-     */
-    protected boolean startedProfile;
-
-    /**
      * Default constructor.
      *
-     * @param talon The Talon SRX this subsystem controls.
+     * @param talon         The Talon SRX this subsystem controls.
      * @param pathGenerator The object for generating the paths for the Talon to run.
      */
     @JsonCreator
     public SubsystemPositionOnboardMP(@NotNull @JsonProperty(required = true) FPSTalon talon,
-                                      @NotNull @JsonProperty(required = true) PathGenerator pathGenerator){
+                                      @NotNull @JsonProperty(required = true) PathGenerator pathGenerator) {
         this.talon = talon;
         this.pathGenerator = pathGenerator;
         startedProfile = false;
@@ -155,13 +152,13 @@ public class SubsystemPositionOnboardMP extends Subsystem implements SubsystemPo
 
     /**
      * When the run method of the scheduler is called this method will be called.
-     *
+     * <p>
      * Starts running the Talon profile if it's ready.
      */
     @Override
-    public void periodic(){
+    public void periodic() {
         //Start the profile if it's ready
-        if (!startedProfile && readyToRunProfile()){
+        if (!startedProfile && readyToRunProfile()) {
             talon.startRunningMP();
             startedProfile = true;
         }

@@ -17,14 +17,18 @@ import org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SubsystemSole
  * A SubsystemPosition that uses motion profiles to move and has a pneumatic brake to hold itself in place.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class SubsystemPositionMPWithBrake extends SubsystemPositionOnboardMP implements SubsystemSolenoid{
+public class SubsystemPositionMPWithBrake extends SubsystemPositionOnboardMP implements SubsystemSolenoid {
 
     /**
      * The piston for the brake.
      */
     @NotNull
     private final MappedDoubleSolenoid piston;
-
+    /**
+     * The position of the piston for the brake when it's allowing the elevator to move.
+     */
+    @NotNull
+    private final DoubleSolenoid.Value brakeReleasePosition;
     /**
      * The current position of the piston.
      */
@@ -32,18 +36,13 @@ public class SubsystemPositionMPWithBrake extends SubsystemPositionOnboardMP imp
     private DoubleSolenoid.Value pistonPos;
 
     /**
-     * The position of the piston for the brake when it's allowing the elevator to move.
-     */
-    @NotNull
-    private final DoubleSolenoid.Value brakeReleasePosition;
-
-    /**
      * Default constructor.
      *
-     * @param talon         The Talon SRX this subsystem controls.
-     * @param pathGenerator The object for generating the paths for the Talon to run.
-     * @param piston The piston for the brake.
-     * @param brakeReleasePosition The position of the piston for the brake when it's allowing the elevator to move. Defaults to {@link DoubleSolenoid.Value#kReverse}.
+     * @param talon                The Talon SRX this subsystem controls.
+     * @param pathGenerator        The object for generating the paths for the Talon to run.
+     * @param piston               The piston for the brake.
+     * @param brakeReleasePosition The position of the piston for the brake when it's allowing the elevator to move.
+     *                             Defaults to {@link DoubleSolenoid.Value#kReverse}.
      */
     @JsonCreator
     public SubsystemPositionMPWithBrake(@JsonProperty(required = true) @NotNull FPSTalon talon,
@@ -76,13 +75,13 @@ public class SubsystemPositionMPWithBrake extends SubsystemPositionOnboardMP imp
 
     /**
      * When the run method of the scheduler is called this method will be called.
-     *
+     * <p>
      * Starts running the Talon profile if it's ready.
      */
     @Override
-    public void periodic(){
+    public void periodic() {
         //Start the profile if it's ready
-        if (!startedProfile && readyToRunProfile()){
+        if (!startedProfile && readyToRunProfile()) {
             talon.startRunningMP();
             setSolenoid(brakeReleasePosition);
             startedProfile = true;

@@ -1,28 +1,21 @@
 package com.team254.lib.util.math;
 
-import static com.team254.lib.util.Util.epsilonEquals;
-
 import com.team254.lib.util.Interpolable;
+
+import static com.team254.lib.util.Util.epsilonEquals;
 
 /**
  * Represents a 2d pose (rigid transform) containing translational and rotational elements.
- * 
+ * <p>
  * Inspired by Sophus (https://github.com/strasdat/Sophus/tree/master/sophus)
  */
 public class RigidTransform2d implements Interpolable<RigidTransform2d> {
     protected static final double kEpsilon = 1E-9;
 
     protected static final RigidTransform2d kIdentity = new RigidTransform2d();
-
-    public static final RigidTransform2d identity() {
-        return kIdentity;
-    }
-
     private final static double kEps = 1E-9;
-
     protected Translation2d translation_;
     protected Rotation2d rotation_;
-
     public RigidTransform2d() {
         translation_ = new Translation2d();
         rotation_ = new Rotation2d();
@@ -38,6 +31,10 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
         rotation_ = new Rotation2d(other.rotation_);
     }
 
+    public static final RigidTransform2d identity() {
+        return kIdentity;
+    }
+
     public static RigidTransform2d fromTranslation(Translation2d translation) {
         return new RigidTransform2d(translation, new Rotation2d());
     }
@@ -47,8 +44,7 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
     }
 
     /**
-     * Obtain a new RigidTransform2d from a (constant curvature) velocity. See:
-     * https://github.com/strasdat/Sophus/blob/master/sophus/se2.hpp
+     * Obtain a new RigidTransform2d from a (constant curvature) velocity. See: https://github.com/strasdat/Sophus/blob/master/sophus/se2.hpp
      */
     public static RigidTransform2d exp(Twist2d delta) {
         double sin_theta = Math.sin(delta.dtheta);
@@ -83,6 +79,18 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
         return new Twist2d(translation_part.x(), translation_part.y(), dtheta);
     }
 
+    private static Translation2d intersectionInternal(RigidTransform2d a, RigidTransform2d b) {
+        final Rotation2d a_r = a.getRotation();
+        final Rotation2d b_r = b.getRotation();
+        final Translation2d a_t = a.getTranslation();
+        final Translation2d b_t = b.getTranslation();
+
+        final double tan_b = b_r.tan();
+        final double t = ((a_t.x() - b_t.x()) * tan_b + b_t.y() - a_t.y())
+                / (a_r.sin() - a_r.cos() * tan_b);
+        return a_t.translateBy(a_r.toTranslation().scale(t));
+    }
+
     public Translation2d getTranslation() {
         return translation_;
     }
@@ -102,9 +110,8 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
     /**
      * Transforming this RigidTransform2d means first translating by other.translation and then rotating by
      * other.rotation
-     * 
-     * @param other
-     *            The other transform.
+     *
+     * @param other The other transform.
      * @return This transform * other
      */
     public RigidTransform2d transformBy(RigidTransform2d other) {
@@ -114,7 +121,7 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
 
     /**
      * The inverse of this transform "undoes" the effect of translating by this transform.
-     * 
+     *
      * @return The opposite of this transform.
      */
     public RigidTransform2d inverse() {
@@ -149,18 +156,6 @@ public class RigidTransform2d implements Interpolable<RigidTransform2d> {
     public boolean isColinear(RigidTransform2d other) {
         final Twist2d twist = log(inverse().transformBy(other));
         return (epsilonEquals(twist.dy, 0.0, kEpsilon) && epsilonEquals(twist.dtheta, 0.0, kEpsilon));
-    }
-
-    private static Translation2d intersectionInternal(RigidTransform2d a, RigidTransform2d b) {
-        final Rotation2d a_r = a.getRotation();
-        final Rotation2d b_r = b.getRotation();
-        final Translation2d a_t = a.getTranslation();
-        final Translation2d b_t = b.getTranslation();
-
-        final double tan_b = b_r.tan();
-        final double t = ((a_t.x() - b_t.x()) * tan_b + b_t.y() - a_t.y())
-                / (a_r.sin() - a_r.cos() * tan_b);
-        return a_t.translateBy(a_r.toTranslation().scale(t));
     }
 
     /**

@@ -7,12 +7,11 @@ import static com.team254.lib.util.motion.MotionUtil.kEpsilon;
  * A MotionState is a completely specified state of 1D motion through time.
  */
 public class MotionState {
+    public static MotionState kInvalidState = new MotionState(Double.NaN, Double.NaN, Double.NaN, Double.NaN);
     protected final double t;
     protected final double pos;
     protected final double vel;
     protected final double acc;
-
-    public static MotionState kInvalidState = new MotionState(Double.NaN, Double.NaN, Double.NaN, Double.NaN);
 
     public MotionState(double t, double pos, double vel, double acc) {
         this.t = t;
@@ -47,26 +46,23 @@ public class MotionState {
 
     /**
      * Extrapolates this MotionState to the specified time by applying this MotionState's acceleration.
-     * 
-     * @param t
-     *            The time of the new MotionState.
-     * @return A MotionState that is a valid predecessor (if t is less than or equal to 0) or successor (if t is greater than or equal to 0) of this state.
+     *
+     * @param t The time of the new MotionState.
+     * @return A MotionState that is a valid predecessor (if t is less than or equal to 0) or successor (if t is greater
+     * than or equal to 0) of this state.
      */
     public MotionState extrapolate(double t) {
         return extrapolate(t, acc);
     }
 
     /**
-     * 
      * Extrapolates this MotionState to the specified time by applying a given acceleration to the (t, pos, vel) portion
      * of this MotionState.
-     * 
-     * @param t
-     *            The time of the new MotionState.
-     * @param acc
-     *            The acceleration to apply.
-     * @return A MotionState that is a valid predecessor (if t is less than or equal to 0) or successor (if t is greater than or equal to 0) of this state (with the
-     *         specified accel).
+     *
+     * @param t   The time of the new MotionState.
+     * @param acc The acceleration to apply.
+     * @return A MotionState that is a valid predecessor (if t is less than or equal to 0) or successor (if t is greater
+     * than or equal to 0) of this state (with the specified accel).
      */
     public MotionState extrapolate(double t, double acc) {
         final double dt = t - this.t;
@@ -74,11 +70,10 @@ public class MotionState {
     }
 
     /**
-     * Find the next time (first time greater than MotionState.t()) that this MotionState will be at pos. This is an inverse of the
-     * extrapolate() method.
-     * 
-     * @param pos
-     *            The position to query.
+     * Find the next time (first time greater than MotionState.t()) that this MotionState will be at pos. This is an
+     * inverse of the extrapolate() method.
+     *
+     * @param pos The position to query.
      * @return The time when we are next at pos() if we are extrapolating with a positive dt. NaN if we never reach pos.
      */
     public double nextTimeAtPos(double pos) {

@@ -17,11 +17,11 @@ public class MotionSegment {
 
     /**
      * Verifies that:
-     * 
+     * <p>
      * 1. All segments have a constant acceleration.
-     * 
+     * <p>
      * 2. All segments have monotonic position (sign of velocity doesn't change).
-     * 
+     * <p>
      * 3. The time, position, velocity, and acceleration of the profile are consistent.
      */
     public boolean isValid() {

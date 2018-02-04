@@ -16,38 +16,34 @@ import org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SubsystemSole
  * An intake that goes up and down with a piston.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class IntakeActuated extends Subsystem implements SubsystemSolenoid, SubsystemIntake{
+public class IntakeActuated extends Subsystem implements SubsystemSolenoid, SubsystemIntake {
 
+    /**
+     * The piston for actuating the intake.
+     */
+    private final DoubleSolenoid piston;
+    /**
+     * The motor for the intake.
+     */
+    private final SimpleMotor motor;
+    /**
+     * The speed to run the motor at going fast and slow, respectively.
+     */
+    private final double fastSpeed, slowSpeed;
     /**
      * The current state of the intake.
      */
     private IntakeMode currentMode;
-
     /**
      * The current position of the piston
      */
     private DoubleSolenoid.Value currentPistonPos;
 
     /**
-     * The piston for actuating the intake.
-     */
-    private final DoubleSolenoid piston;
-
-    /**
-     * The motor for the intake.
-     */
-    private final SimpleMotor motor;
-
-    /**
-     * The speed to run the motor at going fast and slow, respectively.
-     */
-    private final double fastSpeed, slowSpeed;
-
-    /**
      * Default constructor.
      *
-     * @param piston The piston for actuating the intake.
-     * @param motor The motor for the intake.
+     * @param piston    The piston for actuating the intake.
+     * @param motor     The motor for the intake.
      * @param fastSpeed The speed to run the motor at going fast.
      * @param slowSpeed The speed to run the motor at going slow.
      */
@@ -55,7 +51,7 @@ public class IntakeActuated extends Subsystem implements SubsystemSolenoid, Subs
     public IntakeActuated(@NotNull @JsonProperty(required = true) MappedDoubleSolenoid piston,
                           @NotNull @JsonProperty(required = true) SimpleMotor motor,
                           @JsonProperty(required = true) double fastSpeed,
-                          @JsonProperty(required = true)double slowSpeed) {
+                          @JsonProperty(required = true) double slowSpeed) {
         this.piston = piston;
         this.motor = motor;
         this.fastSpeed = fastSpeed;

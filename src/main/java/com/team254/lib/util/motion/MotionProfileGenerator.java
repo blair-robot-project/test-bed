@@ -12,7 +12,7 @@ public class MotionProfileGenerator {
     }
 
     protected static MotionProfile generateFlippedProfile(MotionProfileConstraints constraints,
-            MotionProfileGoal goal_state, MotionState prev_state) {
+                                                          MotionProfileGoal goal_state, MotionState prev_state) {
         MotionProfile profile = generateProfile(constraints, goal_state.flipped(), prev_state.flipped());
         for (MotionSegment s : profile.segments()) {
             s.setStart(s.start().flipped());
@@ -23,18 +23,15 @@ public class MotionProfileGenerator {
 
     /**
      * Generate a motion profile.
-     * 
-     * @param constraints
-     *            The constraints to use.
-     * @param goal_state
-     *            The goal to use.
-     * @param prev_state
-     *            The initial state to use.
+     *
+     * @param constraints The constraints to use.
+     * @param goal_state  The goal to use.
+     * @param prev_state  The initial state to use.
      * @return A motion profile from prev_state to goal_state that satisfies constraints.
      */
     public synchronized static MotionProfile generateProfile(MotionProfileConstraints constraints,
-            MotionProfileGoal goal_state,
-            MotionState prev_state) {
+                                                             MotionProfileGoal goal_state,
+                                                             MotionState prev_state) {
         double delta_pos = goal_state.pos() - prev_state.pos();
         if (delta_pos < 0.0 || (delta_pos == 0.0 && prev_state.vel() < 0.0)) {
             // For simplicity, we always assume the goal requires positive movement. If negative, we flip to solve, then

@@ -1,28 +1,21 @@
 package com.team254.lib.util.math;
 
-import static com.team254.lib.util.Util.epsilonEquals;
-
 import com.team254.lib.util.Interpolable;
 
 import java.text.DecimalFormat;
 
+import static com.team254.lib.util.Util.epsilonEquals;
+
 /**
  * A rotation in a 2d coordinate frame represented a point on the unit circle (cosine and sine).
- * 
+ * <p>
  * Inspired by Sophus (https://github.com/strasdat/Sophus/tree/master/sophus)
  */
 public class Rotation2d implements Interpolable<Rotation2d> {
     protected static final Rotation2d kIdentity = new Rotation2d();
-
-    public static final Rotation2d identity() {
-        return kIdentity;
-    }
-
     protected static final double kEpsilon = 1E-9;
-
     protected double cos_angle_;
     protected double sin_angle_;
-
     public Rotation2d() {
         this(1, 0, false);
     }
@@ -42,6 +35,10 @@ public class Rotation2d implements Interpolable<Rotation2d> {
 
     public Rotation2d(Translation2d direction, boolean normalize) {
         this(direction.x(), direction.y(), normalize);
+    }
+
+    public static final Rotation2d identity() {
+        return kIdentity;
     }
 
     public static Rotation2d fromRadians(double angle_radians) {
@@ -96,9 +93,8 @@ public class Rotation2d implements Interpolable<Rotation2d> {
 
     /**
      * We can rotate this Rotation2d by adding together the effects of it and another rotation.
-     * 
-     * @param other
-     *            The other rotation. See: https://en.wikipedia.org/wiki/Rotation_matrix
+     *
+     * @param other The other rotation. See: https://en.wikipedia.org/wiki/Rotation_matrix
      * @return This rotation rotated by other.
      */
     public Rotation2d rotateBy(Rotation2d other) {
@@ -112,7 +108,7 @@ public class Rotation2d implements Interpolable<Rotation2d> {
 
     /**
      * The inverse of a Rotation2d "undoes" the effect of this rotation.
-     * 
+     *
      * @return The opposite of this rotation.
      */
     public Rotation2d inverse() {

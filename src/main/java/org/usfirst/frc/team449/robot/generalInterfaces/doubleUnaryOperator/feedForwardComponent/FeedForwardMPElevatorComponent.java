@@ -34,7 +34,8 @@ public class FeedForwardMPElevatorComponent extends FeedForwardComponent {
     /**
      * Default constructor.
      *
-     * @param feetToVoltageMap A map of the upper heights of each elevator stage to the {@link FeedForwardComponent} that should be used for that stage.
+     * @param feetToVoltageMap A map of the upper heights of each elevator stage to the {@link FeedForwardComponent}
+     *                         that should be used for that stage.
      */
     @JsonCreator
     public FeedForwardMPElevatorComponent(@NotNull @JsonProperty(required = true) Map<Double, FeedForwardComponent> feetToVoltageMap) {

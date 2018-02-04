@@ -12,8 +12,6 @@ import org.zeromq.ZMQ;
 import proto.PathOuterClass;
 import proto.PathRequestOuterClass;
 
-import java.util.Arrays;
-
 /**
  * The object that requests a motion profile from the Jetson.
  */
@@ -60,9 +58,9 @@ public class PathRequester {
      * @param y         The y displacement, in any unit.
      * @param theta     The angular displacement, in degrees.
      * @param deltaTime The time between setpoints in the profile, in seconds.
-     * @param maxVel The maximum velocity, in units/second.
-     * @param maxAccel The maximum acceleration, in units/(second^2)
-     * @param maxJerk The maximum jerk, in units/(second^3)
+     * @param maxVel    The maximum velocity, in units/second.
+     * @param maxAccel  The maximum acceleration, in units/(second^2)
+     * @param maxJerk   The maximum jerk, in units/(second^3)
      */
     public void requestPath(double x, double y, double theta, double deltaTime, double maxVel, double maxAccel, double maxJerk) {
         //Send the request
@@ -74,14 +72,7 @@ public class PathRequester {
         pathRequest.setMaxVel(maxVel);
         pathRequest.setMaxAccel(maxAccel);
         pathRequest.setMaxJerk(maxJerk);
-        System.out.println("X: "+pathRequest.getX());
-        System.out.println("Y: "+pathRequest.getY());
-        System.out.println("Theta: "+pathRequest.getTheta());
-        System.out.println("Max accel: "+pathRequest.getMaxAccel());
-        System.out.println("Delta time: "+pathRequest.getDt());
-        System.out.println("Start send");
         socket.send(pathRequest.build().toByteArray());
-        System.out.println("Finished send");
     }
 
     /**
@@ -106,9 +97,6 @@ public class PathRequester {
         try {
             //Read the response
             path = PathOuterClass.Path.parseFrom(output);
-            System.out.println("Left length: "+path.getPosLeftCount());
-            System.out.println("Right length: "+path.getPosRightCount());
-            System.out.println("Delta time: "+path.getDeltaTime());
             leftMotionProfileData = new MotionProfileData(path.getPosLeftList(), path.getVelLeftList(),
                     path.getAccelLeftList(), path.getDeltaTime(), inverted, false, resetPosition);
             if (path.getPosRightCount() != 0) {
