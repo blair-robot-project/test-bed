@@ -19,7 +19,7 @@ import java.util.function.DoubleSupplier;
  * A command that drives the given subsystem to a position relative to the current position.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class GoToPositionRelative<T extends Subsystem & SubsystemMPTwoSides> extends CommandGroup implements PoseCommand {
+public class GoToPoseRelative<T extends Subsystem & SubsystemMPTwoSides> extends CommandGroup implements PoseCommand {
 
     /**
      * The command for getting the path from the Jetson.
@@ -33,8 +33,8 @@ public class GoToPositionRelative<T extends Subsystem & SubsystemMPTwoSides> ext
      * @param subsystem The subsystem to run the path gotten from the Jetson on.
      */
     @JsonCreator
-    public GoToPositionRelative(@NotNull @JsonProperty(required = true) GetPathFromJetson getPath,
-                                @NotNull @JsonProperty(required = true) T subsystem) {
+    public GoToPoseRelative(@NotNull @JsonProperty(required = true) GetPathFromJetson getPath,
+                            @NotNull @JsonProperty(required = true) T subsystem) {
         this.getPath = getPath;
         addSequential(this.getPath);
         addSequential(new RunProfileTwoSides<>(subsystem, this::getLeft,

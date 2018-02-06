@@ -262,7 +262,7 @@ autoStartupCommand:
     org.usfirst.frc.team449.robot.commands.general.CommandSequence:
         '@id': auto
         commandList:
-#            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPositionRelative:
+#            - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPoseRelative:
 #                '@id': gtpr
 #                getPath:
 #                    org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands.GetPathFromJetson:

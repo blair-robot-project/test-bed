@@ -21,7 +21,7 @@ import java.util.function.DoubleSupplier;
  * A command that drives the given subsystem to an absolute position.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
-public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemAHRS> extends CommandGroup implements PoseCommand {
+public class GoToPose<T extends Subsystem & SubsystemMPTwoSides & SubsystemAHRS> extends CommandGroup implements PoseCommand {
 
     /**
      * The object to get robot pose from.
@@ -63,16 +63,16 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
      * @param deltaTime     The time between setpoints in the profile, in seconds.
      */
     @JsonCreator
-    public GoToPosition(@NotNull @JsonProperty(required = true) T subsystem,
-                        @NotNull @JsonProperty(required = true) PathRequester pathRequester,
-                        @NotNull @JsonProperty(required = true) PoseEstimator poseEstimator,
-                        @Nullable Double x,
-                        @Nullable Double y,
-                        @Nullable Double theta,
-                        @JsonProperty(required = true) double maxVel,
-                        @JsonProperty(required = true) double maxAccel,
-                        @JsonProperty(required = true) double maxJerk,
-                        @JsonProperty(required = true) double deltaTime) {
+    public GoToPose(@NotNull @JsonProperty(required = true) T subsystem,
+                    @NotNull @JsonProperty(required = true) PathRequester pathRequester,
+                    @NotNull @JsonProperty(required = true) PoseEstimator poseEstimator,
+                    @Nullable Double x,
+                    @Nullable Double y,
+                    @Nullable Double theta,
+                    @JsonProperty(required = true) double maxVel,
+                    @JsonProperty(required = true) double maxAccel,
+                    @JsonProperty(required = true) double maxJerk,
+                    @JsonProperty(required = true) double deltaTime) {
         this.x = x;
         this.y = y;
         this.theta = theta;
@@ -80,9 +80,9 @@ public class GoToPosition<T extends Subsystem & SubsystemMPTwoSides & SubsystemA
         this.subsystem = subsystem;
         GetPathFromJetson getPath = new GetPathFromJetson(pathRequester, null, null,
                 null, deltaTime, maxVel, maxAccel, maxJerk, false);
-        GoToPositionRelative goToPositionRelative = new GoToPositionRelative<>(getPath, subsystem);
-        goToPositionRelative.setDestination(this::getX, this::getY, this::getTheta);
-        addSequential(goToPositionRelative);
+        GoToPoseRelative goToPoseRelative = new GoToPoseRelative<>(getPath, subsystem);
+        goToPoseRelative.setDestination(this::getX, this::getY, this::getTheta);
+        addSequential(goToPoseRelative);
     }
 
     /**
