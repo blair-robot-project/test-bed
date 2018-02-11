@@ -1,9 +1,6 @@
 package org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.commands;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import edu.wpi.first.wpilibj.command.Command;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -172,6 +169,7 @@ public class GetPathFromJetson extends Command implements PoseCommand {
      * @param waypoints The points for the path to hit.
      */
     @Override
+    @JsonIgnore
     public void setWaypoints(Waypoint[] waypoints) {
         this.waypoints = waypoints;
         this.waypointSupplier = null;
@@ -183,6 +181,7 @@ public class GetPathFromJetson extends Command implements PoseCommand {
      * @param waypointSupplier The supplier for the points for the path to hit.
      */
     @Override
+    @JsonIgnore
     public void setWaypoints(Supplier<Waypoint[]> waypointSupplier) {
         this.waypoints = null;
         this.waypointSupplier = waypointSupplier;
