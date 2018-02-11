@@ -279,8 +279,8 @@ autoStartupCommand:
                 x: 0
                 y: 7
                 theta: 180
-        maxVel: 7
-        maxAccel: 12
+        maxVel: 4
+        maxAccel: 8
         maxJerk: 16
         deltaTime: 0.02
 updater:
