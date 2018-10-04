@@ -421,3 +421,33 @@ buttons:
               org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                 drive
         action: WHEN_PRESSED
+
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': motor1JoystickControl
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the button yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': motor1JoystickControl
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        action: WHEN_PRESSED
+
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': motor2JoystickControl
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the button yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': motor2JoystickControl
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        action: WHEN_PRESSED
