@@ -376,3 +376,48 @@ buttons:
               org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                 drive
         action: WHEN_PRESSED
+
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': pistonControl2
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the buttons number yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': pistonControl2
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        action: WHEN_PRESSED
+
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': pistonControl3
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the buttons number yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': pistonControl3
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        action: WHEN_PRESSED
+
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': pistonControl4
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the buttons number yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': pistonControl4
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
+        action: WHEN_PRESSED
