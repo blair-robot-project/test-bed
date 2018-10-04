@@ -331,6 +331,7 @@ updater:
             - org.usfirst.frc.team449.robot.jacksonWrappers.PDP:
                 PDP
 buttons:
+# the following two controllers allows the driver to drive the robot unidirectionally (Forward, Backward, Left, and Right)
     -   button:
             org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
                 '@id': upshiftButton
@@ -358,4 +359,20 @@ buttons:
                 subsystem:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
                         drive
+        action: WHEN_PRESSED
+
+#Controls four pistons using the ABXY buttons and two motors using the joysticks.
+    -   button:
+          org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': pistonControl1
+            joystick:
+              org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                driverGamepad
+            buttonNumber: #Don't know the buttons number yet
+        command:
+          org.usfirst.frc.team449.robot.generalInterfaces.shiftable.commands.SwitchToLowGear:
+            '@id': pistonControl1
+            subsystem:
+              org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
+                drive
         action: WHEN_PRESSED
