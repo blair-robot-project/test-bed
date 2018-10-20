@@ -5,5 +5,5 @@ public class PracticeFrame extends Robot {
     /**
      * The name of the map to read from. Should be overriden by a subclass to change the name.
      */
-    protected String mapName = "practice_frame.yml";
+    protected String mapName = "bunnybots.yml";
 }
