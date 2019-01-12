@@ -3,6 +3,7 @@ logger:
   '@id': logger
   eventLogFilename: "/home/lvuser/logs/eventLog-"
   telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+  loopTimeMillis: 100
   loggables:
   - org.usfirst.frc.team449.robot.jacksonWrappers.PDP:
       '@id': PDP
@@ -38,7 +39,7 @@ logger:
           - &lowGear
             gear: LOW
             feedForwardComponent:
-              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.feedForwardComponent.FeedForwardKaKvComponent:
                 kAFwd: 0.12919953323
                 kVFwd: 1.32498443423
                 interceptVoltageFwd: 0.797588
@@ -51,7 +52,7 @@ logger:
           - &highGear
             gear: HIGH
             feedForwardComponent:
-              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.feedForwardComponent.FeedForwardKaKvComponent:
                 kAFwd: 0.19423682134
                 kVFwd: 0.65106152446
                 interceptVoltageFwd: 0.986742
@@ -82,7 +83,7 @@ logger:
           perGearSettings:
           - <<: *lowGear
             feedForwardComponent:
-              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.feedForwardComponent.FeedForwardKaKvComponent:
                 kAFwd: 0.1131952403
                 kVFwd: 1.32948238154
                 interceptVoltageFwd: 0.793247
@@ -91,7 +92,7 @@ logger:
                 interceptVoltageRev: 0.7668543
           - <<: *highGear
             feedForwardComponent:
-              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.FeedForwardComponent.FeedForwardKaKvComponent:
+              org.usfirst.frc.team449.robot.generalInterfaces.doubleUnaryOperator.feedForwardComponent.FeedForwardKaKvComponent:
                 kAFwd: 0.19440692065
                 kVFwd: 0.63537039069
                 interceptVoltageFwd: 0.997928
@@ -99,7 +100,7 @@ logger:
                 kVRev: 0.62924298023
                 interceptVoltageRev: 0.8839750
           slaveTalons:
-          - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
+          -  org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
               port: 5
               inverted: false
           - org.usfirst.frc.team449.robot.jacksonWrappers.SlaveTalon:
@@ -283,7 +284,7 @@ autoStartupCommand:
     #                subsystem:
     #                    org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
     #                        drive
-    - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+    - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPose:
         '@id': firstGoToPos
         subsystem:
           org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
@@ -294,14 +295,14 @@ autoStartupCommand:
         poseEstimator:
           org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
             poseEstimator
-        x: 10
-        y: 0
-        theta: 0
+        #x: 10
+        #y: 0
+        #theta: 0
         maxVel: 7
         maxAccel: 12
         maxJerk: 16
         deltaTime: 0.02
-    - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPosition:
+    - org.usfirst.frc.team449.robot.subsystem.interfaces.motionProfile.TwoSideMPSubsystem.commands.GoToPose:
         '@id': secondGoToPos
         subsystem:
           org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
@@ -311,9 +312,9 @@ autoStartupCommand:
         poseEstimator:
           org.usfirst.frc.team449.robot.generalInterfaces.poseEstimator.UnidirectionalPoseEstimator:
             poseEstimator
-        x: 15
-        y: 5
-        theta: 90
+        #x: 15
+        #y: 5
+        #theta: 90
         maxVel: 5
         maxAccel: 8
         maxJerk: 16
@@ -358,4 +359,68 @@ buttons:
         subsystem:
           org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyroShiftable:
             drive
+    action: WHEN_PRESSED
+-   button:
+        org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': stabberButton #solenoid
+            joystick:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    driverGamepad
+            buttonNumber: 1
+    command:
+        org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+            '@id': stabberCommand
+            subsystem:
+                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                    '@id': stabber
+                    piston:
+                        '@id': stabberSolenoid
+                        forward: 6
+                        reverse: 7
+    action: WHEN_PRESSED
+-   button:
+        org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': retractStabberButton #solenoid
+            joystick:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    driverGamepad
+            buttonNumber: 2
+    command:
+        org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+            '@id': retractStabberCommand
+            subsystem:
+                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                    stabber
+    action: WHEN_PRESSED
+-   button:
+        org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': stabberBaseButton #solenoid
+            joystick:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    driverGamepad
+            buttonNumber: 3
+    command:
+        org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+            '@id': stabberBaseCommand
+            subsystem:
+                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                    '@id': stabberBase
+                    piston:
+                        '@id': stabberBaseSolenoid
+                        forward: 1
+                        reverse: 0
+    action: WHEN_PRESSED
+-   button:
+        org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+            '@id': retractStabberBaseButton #solenoid
+            joystick:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    driverGamepad
+            buttonNumber: 4
+    command:
+        org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+            '@id': retractStabberBaseCommand
+            subsystem:
+                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                    stabberBase
     action: WHEN_PRESSED
