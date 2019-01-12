@@ -424,3 +424,65 @@ buttons:
                 org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
                     stabberBase
     action: WHEN_PRESSED
+#=======
+#  #Stabby pull
+#-   button:
+#      org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+#        '@id': hatchPuller
+#        joystick:
+#          org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+#            driverGamepad
+#        buttonNumber: 5
+#    command:
+#      org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+#        '@id': hatchCommandSequenceStabby
+#        commandList:
+#          - org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+#              '@id': hatchPullerBig
+#              subsystem:
+#                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+#                  '@id': bigPuller
+#                  piston:
+#                    '@id': bigPullerPiston
+#                    module: 0
+#                    forward: 6
+#                    reverse: 7
+#          - org.usfirst.frc.team449.robot.commands.general.MappedWaitCommand:
+#              '@id': delay3
+#              timeout: 0.5
+#          - org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+#              '@id': hatchPullerHook
+#              subsystem:
+#                org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+#                  '@id': hatchHook
+#                  piston:
+#                    '@id': hatchHookPiston
+#                    module: 0
+#                    forward: 8
+#                    reverse: 9
+#    action: WHEN_PRESSED
+#  #Stabby Retract
+#-   button:
+#      org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+#        '@id': hatchRetract
+#        joystick:
+#          org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+#            driverGamepad
+#        buttonNumber: 6
+#    command:
+#      org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+#        '@id': hatchRetractCommandSequenceStabby
+#        commandList:
+#          - org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+#              '@id': retractHatchPullerBig
+#              subsystem:
+#                hatchHook
+#          - org.usfirst.frc.team449.robot.commands.general.MappedWaitCommand:
+#              '@id': delay4
+#              timeout: 0.5
+#          - org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+#              '@id': hatchPullerHook
+#              subsystem:
+#                bigPuller
+#    action: WHEN_PRESSED
+#>>>>>>> 9708696638776a2f48b61a2cb7a9bac692f00e57:src/main/resources/map.yml
