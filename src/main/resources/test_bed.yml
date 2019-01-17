@@ -425,11 +425,10 @@ buttons:
                     stabberBase
     action: WHEN_PRESSED
 
-# *********** Below is code that needs to be tested ***************
-# *********** To test just uncomment the code below and comment the above 4 button commands ***************
 
-#  #Stabby pull
-#-   button:
+
+
+#-   button: #Stabby pull
 #      org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
 #        '@id': hatchPuller
 #        joystick:
@@ -461,8 +460,8 @@ buttons:
 #                  piston:
 #                    '@id': hatchHookPiston
 #                    module: 0
-#                    forward: 8
-#                    reverse: 9
+#                    forward: 0
+#                    reverse: 1
 #    action: WHEN_PRESSED
 #  #Stabby Retract
 #-   button:
@@ -486,6 +485,7 @@ buttons:
 #          - org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
 #              '@id': hatchPullerHook
 #              subsystem:
+#          - org.usfirst.frc.team449.robot.commands.general.MappedWaitCommand:
 #                bigPuller
 #    action: WHEN_PRESSED
 #  #GetHatch
