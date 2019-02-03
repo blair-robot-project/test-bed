@@ -10,7 +10,7 @@ plugins {
 group 'org.usfirst.frc.team449.test-bed'
 version '1.0'
 
-def ROBOT_MAIN_CLASS = "org.usfirst.frc.team449.robot.Main"
+def ROBOT_MAIN_CLASS = "org.usfirst.frc.team449.robot.TestBedMain"
 
 repositories {
     mavenCentral()
