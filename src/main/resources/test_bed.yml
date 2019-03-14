@@ -46,7 +46,7 @@ logger:
                 kARev: 0.15941277553
                 kVRev: 1.28936521731
                 interceptVoltageRev: 0.7743393
-            maxSpeed: 8.7
+            maxSpeed: 3
             kP: 0.15
             motionProfilePFwd: 0.5
           - &highGear
@@ -59,7 +59,7 @@ logger:
                 kARev: 0.20714931484
                 kVRev: 0.63105309
                 interceptVoltageRev: 0.894144
-            maxSpeed: 15
+            maxSpeed: 3
             kP: 0.3
           minNumPointsInBottomBuffer: 10
           updaterProcessPeriodSecs: 0.005
