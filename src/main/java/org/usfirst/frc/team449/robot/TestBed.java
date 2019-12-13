@@ -28,7 +28,7 @@ public class TestBed extends Robot {
     /**
      * The name of the map to read from. Should be overriden by a subclass to change the name.
      */
-    protected String mapName = "outreach_map.yml";
+    protected String mapName = "test_bed.yml";
 
     /**
      * The object constructed directly from the yaml map.

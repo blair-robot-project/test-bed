@@ -71,7 +71,8 @@ idea {
 /* ssh stuff */
 remotes {
     rio {
-        host = 'roboRIO-449-frc.local'
+        host = '172.22.11.2'
+//        host = 'roboRIO-449-frc.local'
         user = 'lvuser'
         knownHosts = allowAnyHosts
     }
